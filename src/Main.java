@@ -1,57 +1,81 @@
-import Task3.Average;
-import Task3.Calculator;
-import Task3.Deposit;
-import com.sun.deploy.util.ArrayUtil;
+import Task5.Group;
+import Task5.Student;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        // сумма цифр числа
-        /*
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(sumOfDigits(scanner.nextInt()));
+        // TASK 5, TEST
 
-        // принадлежность точки прямоугольнику
-        System.out.println(dotInRectangle(scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt()));
-        */
+        Student ivanov = new Student("Ivanov");
+        ArrayList<Integer> ivanovMarks = new ArrayList<Integer>();
+        ivanovMarks.add(10);
+        ivanovMarks.add(9);
+        ivanovMarks.add(9);
+        ivanovMarks.add(10);
+        ivanov.setMarks(ivanovMarks);
+        ArrayList<Boolean> ivanovAttandance = new ArrayList<Boolean>();
+        ivanovAttandance.add(true);
+        ivanovAttandance.add(true);
+        ivanovAttandance.add(false);
+        ivanovAttandance.add(true);
+        ivanov.setAttandance(ivanovAttandance);
 
-        String[][] students = new String[10][2];
-        int[][] makrs = new int[10][10];
-        boolean[][] attandance = new boolean[10][10];
+        Student petrov = new Student("Petrov");
+        ArrayList<Integer> petrovMarks = new ArrayList<Integer>();
+        petrovMarks.add(10);
+        petrovMarks.add(10);
+        petrovMarks.add(10);
+        petrovMarks.add(10);
+        petrov.setMarks(petrovMarks);
+        ArrayList<Boolean> petrovAttandance = new ArrayList<Boolean>();
+        petrovAttandance.add(true);
+        petrovAttandance.add(true);
+        petrovAttandance.add(true);
+        petrovAttandance.add(true);
+        petrov.setAttandance(petrovAttandance);
 
-        addStudent(students, "Петров");
-        addStudent(students, "Иванов");
-        addStudent(students, "Сидоров");
+        Student sidorov = new Student("Sidorov");
+        ArrayList<Integer> sidorovMarks = new ArrayList<Integer>();
+        sidorovMarks.add(10);
+        sidorovMarks.add(7);
+        sidorovMarks.add(4);
+        sidorovMarks.add(2);
+        sidorov.setMarks(sidorovMarks);
+        ArrayList<Boolean> sidorovAttandance = new ArrayList<Boolean>();
+        sidorovAttandance.add(true);
+        sidorovAttandance.add(false);
+        sidorovAttandance.add(false);
+        sidorovAttandance.add(false);
+        sidorov.setAttandance(sidorovAttandance);
 
-        System.out.println("Список студентов:\n");
-        printStudents(students);
+        Group group1 = new Group(1);
+        group1.addStudent(ivanov);
+        group1.addStudent(petrov);
+        group1.addStudent(sidorov);
+        group1.print();
 
-        addMark(makrs, getStudentId(students, "Петров"), 8, 1);
-        addMark(makrs, getStudentId(students, "Иванов"), 10, 1);
-        addMark(makrs, getStudentId(students, "Сидоров"), 5, 1);
+        System.out.println(group1.contains("Ivanov"));
 
-        // i - id студента
-        // j - номер занятия
-        System.out.println("Оценки студентов:\n");
-        printMarks(makrs);
+        group1.deleteByLastName("Ivanov");
+        group1.print();
 
-        addAttandance(attandance, getStudentId(students, "Петров"), true, 1);
-        addAttandance(attandance, getStudentId(students, "Иванов"), true, 1);
-        addAttandance(attandance, getStudentId(students, "Сидоров"), true, 1);
+        System.out.println(group1.contains("Ivanov"));
 
-        // i - id студента
-        // j - номер занятия
-        System.out.println("Посещение занятий:\n");
-        printAttandance(attandance);
-
-        sortByLastName(students);
-        printStudents(students);
+        group1.clear();
+        group1.print();
     }
+}
 
+
+// TASK 4 --------------------------------------------------------------------------------------------------------------
+
+    /*String[][] students = new String[10][2];
+        int[][] makrs = new int[10][10];
+        boolean[][] attandance = new boolean[10][10];*/
+
+    /*
     public static boolean containsStudent(String[][] students, String lastName) {
         for (String[] s : students) {
             if (s[0] == lastName) {
@@ -199,8 +223,7 @@ public class Main {
         System.out.println();
     }
 
-
-    // -----------------------------------------------------------------------------------------------------------------
+    // -----------------------
 
     public static int sumOfDigits(int num) {
         int sum = 0;
@@ -236,9 +259,8 @@ public class Main {
         return flagX && flagY;
     }
 
-}
 
-// TASK 3
+// TASK 3 --------------------------------------------------------------------------------------------------------------
 
     /*
     Scanner sc = new Scanner(System.in);
