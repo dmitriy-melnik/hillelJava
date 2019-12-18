@@ -8,7 +8,7 @@ public class Group {
     private int number;
     // данные о студентах хранятся в уже отсортированной коллекции
     // для правильной сортировки в TreeSet было передано лямбда-выражение
-    // (также можно было передать анонимный класс либо Comparator.comparing(Student::getLastName), либо создать новый класс компаратора)
+    // (также можно было передать анонимный класс компаратора либо Comparator.comparing(Student::getLastName), либо создать новый класс компаратора)
     private TreeSet<Student> students = new TreeSet<>((o1, o2) -> o1.getLastName().compareTo(o2.getLastName()));
 
     public Group(int number) {
