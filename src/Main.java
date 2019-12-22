@@ -1,21 +1,51 @@
 import Task5.Group;
 import Task5.Student;
+import Task6.ArrayInt;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
 
-        // TASK 5, TEST
+        // TASK 6, TEST
+        ArrayInt arr = new ArrayInt();
+        arr.add(4);
+        arr.add(5);
+        System.out.println(Arrays.toString(arr.getArray()));
+        System.out.println(arr.get(0));
+        System.out.println(arr.contains(4));
 
-        Student ivanov = new Student("Ivanov");
-        ArrayList<Integer> ivanovMarks = new ArrayList<Integer>();
+        int[] a = {2, 3, 6};
+        arr.addAll(a);
+        System.out.println(Arrays.toString(arr.getArray()));
+
+        int[] b = {4, 5};
+        System.out.println(arr.equals(b));
+
+        System.out.println(arr.indexOf(5));
+        System.out.println(arr.getSize());
+
+        arr.quickSort();
+        System.out.println(Arrays.toString(arr.getArray()));
+
+
+
+    }
+}
+
+// TASK 5, TEST --------------------------------------------------------------------------------------------------------
+
+    /*
+    Student ivanov = new Student("Ivanov");
+    ArrayList<Integer> ivanovMarks = new ArrayList<Integer>();
         ivanovMarks.add(10);
-        ivanovMarks.add(9);
-        ivanovMarks.add(9);
-        ivanovMarks.add(10);
-        ivanov.setMarks(ivanovMarks);
-        ArrayList<Boolean> ivanovAttandance = new ArrayList<Boolean>();
+                ivanovMarks.add(9);
+                ivanovMarks.add(9);
+                ivanovMarks.add(10);
+                ivanov.setMarks(ivanovMarks);
+                ArrayList<Boolean> ivanovAttandance = new ArrayList<Boolean>();
         ivanovAttandance.add(true);
         ivanovAttandance.add(true);
         ivanovAttandance.add(false);
@@ -65,9 +95,7 @@ public class Main {
 
         group1.clear();
         group1.print();
-    }
-}
-
+        */
 
 // TASK 4 --------------------------------------------------------------------------------------------------------------
 
