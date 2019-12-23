@@ -13,13 +13,13 @@ public class Main {
         ArrayInt arr = new ArrayInt();
         arr.add(4);
         arr.add(5);
-        System.out.println(Arrays.toString(arr.getArray()));
+        System.out.println(arr);
         System.out.println(arr.get(0));
         System.out.println(arr.contains(4));
 
         int[] a = {2, 3, 6};
         arr.addAll(a);
-        System.out.println(Arrays.toString(arr.getArray()));
+        System.out.println(arr);
 
         int[] b = {4, 5};
         System.out.println(arr.equals(b));
@@ -28,7 +28,7 @@ public class Main {
         System.out.println(arr.getSize());
 
         arr.quickSort();
-        System.out.println(Arrays.toString(arr.getArray()));
+        System.out.println(arr);
 
 
 

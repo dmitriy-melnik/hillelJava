@@ -111,4 +111,9 @@ public class ArrayInt {
         doSort(cur + 1, end);
     }
 
+    @Override
+    public String toString() {
+        return Arrays.toString(array);
+    }
+
 }
