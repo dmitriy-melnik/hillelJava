@@ -1,39 +1,63 @@
-import Task5.Group;
-import Task5.Student;
-import Task6.ArrayInt;
+import Task7.*;
+import Task7.Abstracts.Animal;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
 
-        // TASK 6, TEST
-        ArrayInt arr = new ArrayInt();
-        arr.add(4);
-        arr.add(5);
-        System.out.println(arr);
-        System.out.println(arr.get(0));
-        System.out.println(arr.contains(4));
+        // TASK 7, TEST
+        Animal cat = new Cat();
+        Animal crocodile = new Crocodile();
+        Animal dog = new Dog();
+        Animal fish = new Fish();
+        Animal giraffe = new Giraffe();
+        Animal giudeDog = new GuideDog();
+        Animal hamster = new Hamster();
+        Animal lion = new Lion();
+        Animal wolf = new Wolf();
 
-        int[] a = {2, 3, 6};
-        arr.addAll(a);
-        System.out.println(arr);
+        ArrayList<Animal> animals = new ArrayList<>();
+        animals.add(cat);
+        animals.add(crocodile);
+        animals.add(dog);
+        animals.add(fish);
+        animals.add(giraffe);
+        animals.add(giudeDog);
+        animals.add(hamster);
+        animals.add(lion);
+        animals.add(wolf);
 
-        int[] b = {4, 5};
-        System.out.println(arr.equals(b));
-
-        System.out.println(arr.indexOf(5));
-        System.out.println(arr.getSize());
-
-        arr.quickSort();
-        System.out.println(arr);
-
-
+        for (Animal a : animals) {
+            System.out.println(a.voice());
+        }
 
     }
 }
+
+// TASK 6, TEST --------------------------------------------------------------------------------------------------------
+
+    /*
+    ArrayInt arr = new ArrayInt();
+        arr.add(4);
+                arr.add(5);
+                System.out.println(arr);
+                System.out.println(arr.get(0));
+                System.out.println(arr.contains(4));
+
+                int[] a = {2, 3, 6};
+                arr.addAll(a);
+                System.out.println(arr);
+
+                int[] b = {4, 5};
+                System.out.println(arr.equals(b));
+
+                System.out.println(arr.indexOf(5));
+                System.out.println(arr.getSize());
+
+                arr.quickSort();
+                System.out.println(arr);
+     */
 
 // TASK 5, TEST --------------------------------------------------------------------------------------------------------
 
