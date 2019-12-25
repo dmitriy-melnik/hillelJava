@@ -20,8 +20,12 @@ public class Calculator {
 
     public static double div(double d1, double d2) {
 
-        if (d2 == 0) throw new IllegalArgumentException("Делить на ноль нельзя");
-        return d1 / d2;
+        if (d2 == 0) {
+            throw new IllegalArgumentException("Делить на ноль нельзя");
+        }
+        else {
+            return d1 / d2;
+        }
     }
 
 }
