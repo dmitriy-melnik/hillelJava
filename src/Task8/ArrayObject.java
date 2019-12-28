@@ -158,8 +158,7 @@ public class ArrayObject implements Collection {
 
     @Override
     public Object[] toArray(Object[] a) {
-        a = array;
-        return a;
+        return new Object[0];
     }
 
     @Override
