@@ -1,39 +1,91 @@
 import Task7.*;
 import Task7.Abstracts.Animal;
+import Task8.ArrayObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
 
-        // TASK 7, TEST
-        Animal cat = new Cat();
-        Animal crocodile = new Crocodile();
-        Animal dog = new Dog();
-        Animal fish = new Fish();
-        Animal giraffe = new Giraffe();
-        Animal giudeDog = new GuideDog();
-        Animal hamster = new Hamster();
-        Animal lion = new Lion();
-        Animal wolf = new Wolf();
+        // TASK 8, TEST
+        ArrayObject a = new ArrayObject();
+        a.add(1);
+        a.add(2);
+        a.add(3);
+        a.add(5);
+        a.add(7);
+        a.add(9);
+        a.add(5);
+        System.out.println(a);
+        a.remove(5);
+        System.out.println("After remove 5: " + a);
 
-        ArrayList<Animal> animals = new ArrayList<>();
-        animals.add(cat);
-        animals.add(crocodile);
-        animals.add(dog);
-        animals.add(fish);
-        animals.add(giraffe);
-        animals.add(giudeDog);
-        animals.add(hamster);
-        animals.add(lion);
-        animals.add(wolf);
+        ArrayList list = new ArrayList();
+        list.add(11);
+        list.add(22);
+        list.add(33);
 
-        for (Animal a : animals) {
-            System.out.println(a.voice());
-        }
+        a.addAll(list);
+        System.out.println("After addAll (это будет наш массив): " + a);
+        System.out.println("Contains " + list + ": " + a.containsAll(list));
+
+        ArrayObject a1 = new ArrayObject();
+        a1.add(1);
+        a1.add(2);
+        a1.add(3);
+        a1.add(7);
+        a1.add(9);
+        a1.add(11);
+        a1.add(22);
+        a1.add(33);
+        a1.retainAll(list);
+        System.out.println("After retainAll" + list + ": " + a1);
+
+        ArrayObject a2 = new ArrayObject();
+        a2.add(1);
+        a2.add(2);
+        a2.add(3);
+        a2.add(7);
+        a2.add(9);
+        a2.add(11);
+        a2.add(22);
+        a2.add(33);
+        a2.removeAll(list);
+        System.out.println("After removeAll" + list + ": " + a2);
 
     }
 }
+
+// TASK 7, TEST --------------------------------------------------------------------------------------------------------
+
+    /*
+    Animal cat = new Cat();
+    Animal crocodile = new Crocodile();
+    Animal dog = new Dog();
+    Animal fish = new Fish();
+    Animal giraffe = new Giraffe();
+    Animal giudeDog = new GuideDog();
+    Animal hamster = new Hamster();
+    Animal lion = new Lion();
+    Animal wolf = new Wolf();
+
+    ArrayList<Animal> animals = new ArrayList<>();
+        animals.add(cat);
+                animals.add(crocodile);
+                animals.add(dog);
+                animals.add(fish);
+                animals.add(giraffe);
+                animals.add(giudeDog);
+                animals.add(hamster);
+                animals.add(lion);
+                animals.add(wolf);
+
+                for (Animal a : animals) {
+                System.out.println(a.voice());
+                }
+                */
 
 // TASK 6, TEST --------------------------------------------------------------------------------------------------------
 
