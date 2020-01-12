@@ -13,15 +13,20 @@ public class ArrayObject implements Collection {
         return array.length;
     }
 
+    // fixed
     @Override
     public boolean isEmpty() {
-        boolean check = true;
+        if (size() == 0) {
+            return true;
+        }
+        else return false;
+        /*boolean check = true;
         for (Object o : array) {
             if (o != null) {
                 check = false;
             }
         }
-        return check;
+        return check;*/
     }
 
     @Override
@@ -44,11 +49,17 @@ public class ArrayObject implements Collection {
         return array;
     }
 
+    // fixed
     @Override
     public boolean add(Object o) {
-        array = Arrays.copyOf(array, array.length + 1);
-        array[array.length - 1] = o;
-        return true;
+        if (o == null) {
+            return false;
+        }
+        else {
+            array = Arrays.copyOf(array, array.length + 1);
+            array[array.length - 1] = o;
+            return true;
+        }
     }
 
     @Override
