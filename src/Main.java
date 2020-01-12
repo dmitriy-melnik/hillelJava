@@ -9,8 +9,23 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) {
 
-        // TASK 8, TEST
-        ArrayObject a = new ArrayObject();
+        System.out.println(fibonachi(10)); // 55
+        System.out.println(fibonachi(100)); // no answer
+        System.out.println(fibonachi(1000)); // no answer
+
+    }
+
+    public static int fibonachi(int number) {
+        if (number == 0) return 0;
+        if (number == 1) return 1;
+        return fibonachi(number - 1) + fibonachi(number - 2);
+    }
+}
+
+// TASK 8, TEST --------------------------------------------------------------------------------------------------------
+
+    /*
+    ArrayObject a = new ArrayObject();
         a.add(1);
         a.add(2);
         a.add(3);
@@ -22,7 +37,7 @@ public class Main {
         a.remove(5);
         System.out.println("After remove 5: " + a);
 
-        ArrayList list = new ArrayList();
+    ArrayList list = new ArrayList();
         list.add(11);
         list.add(22);
         list.add(33);
@@ -31,7 +46,7 @@ public class Main {
         System.out.println("After addAll (это будет наш массив): " + a);
         System.out.println("Contains " + list + ": " + a.containsAll(list));
 
-        ArrayObject a1 = new ArrayObject();
+    ArrayObject a1 = new ArrayObject();
         a1.add(1);
         a1.add(2);
         a1.add(3);
@@ -43,7 +58,7 @@ public class Main {
         a1.retainAll(list);
         System.out.println("After retainAll" + list + ": " + a1);
 
-        ArrayObject a2 = new ArrayObject();
+    ArrayObject a2 = new ArrayObject();
         a2.add(1);
         a2.add(2);
         a2.add(3);
@@ -54,9 +69,7 @@ public class Main {
         a2.add(33);
         a2.removeAll(list);
         System.out.println("After removeAll" + list + ": " + a2);
-
-    }
-}
+        */
 
 // TASK 7, TEST --------------------------------------------------------------------------------------------------------
 
