@@ -82,6 +82,7 @@ public class MyLinkedList implements Collection {
             else {
                 Node node = new Node(o, head);
                 head = node;
+                size++;
                 return true;
             }
         }
