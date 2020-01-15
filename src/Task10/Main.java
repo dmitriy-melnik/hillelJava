@@ -8,19 +8,22 @@ public class Main {
         list.add(1);
         list.add(2);
         list.add(3);
+        list.add(2);
         System.out.println("LinkedList: [ " + list + " ]");
         System.out.println("Size: " + list.size());
-        System.out.println("Contains 2: " + list.contains(2));
+        System.out.println("Contains 3: " + list.contains(3));
+
         list.remove(2);
         System.out.println("LinkedList after delete 2: [ " + list + " ]; size = " + list.size());
         list.remove(3);
         System.out.println("LinkedList after delete 3: [ " + list + " ]; size = " + list.size());
         list.remove(1);
         System.out.println("LinkedList after delete 1: [ " + list + " ]; size = " + list.size());
+        list.clear();
         list.addFirst(1);
         list.addFirst(2);
         list.addFirst(3);
-        System.out.println(list);
+        System.out.println("LinkedList: [ " + list + " ]");
 
     }
 }

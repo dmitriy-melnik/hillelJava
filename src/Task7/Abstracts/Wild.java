@@ -1,5 +1,4 @@
 package Task7.Abstracts;
-
 import Task7.Abstracts.Animal;
 
 public abstract class Wild extends Animal {
@@ -23,5 +22,4 @@ public abstract class Wild extends Animal {
             return "Hello, i am a wild animal";
         }
     }
-
 }

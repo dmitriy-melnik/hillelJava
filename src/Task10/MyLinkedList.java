@@ -21,10 +21,14 @@ public class MyLinkedList implements Collection {
     @Override
     public boolean contains(Object o) {
         Node current = head;
-        while (current != tail) {
+        if (head == null) {
+            return false;
+        }
+        while (true) {
             if (current.getData().equals(o)) {
                 return true;
             }
+            if (current.getNext() == null) break;
             current = current.getNext();
         }
         return false;
@@ -45,71 +49,69 @@ public class MyLinkedList implements Collection {
         return new Object[0];
     }
 
-    // add to the end
     @Override
     public boolean add(Object o) {
-        if(o == null) {
+        if (o == null) {
             return false;
-        }
-        else {
-            Node node = new Node(o, null);
+        } else {
             if (head == null) {
+                Node node = new Node(o, null, null);
                 head = node;
+                tail = node;
+            } else {
+                Node node = new Node(o, tail, null);
+                tail.setNext(node);
+                tail = node;
             }
-            else {
-                Node current = head;
-                while (current.getNext() != tail) {
-                    current = current.getNext();
-                }
-                current.setNext(node);
-            }
-            node.setNext(tail);
             size++;
             return true;
         }
     }
 
-    // add as a first element
     public boolean addFirst(Object o) {
         if (o == null) {
             return false;
-        }
-        else {
+        } else {
             if (head == null) {
-                add(o);
-                return true;
-            }
-            else {
-                Node node = new Node(o, head);
+                Node node = new Node(o, null, null);
                 head = node;
-                size++;
-                return true;
+                tail = node;
+            } else {
+                Node node = new Node(o, null, head);
+                head.setPrevious(node);
+                head = node;
             }
+            size++;
+            return true;
         }
     }
 
-    // removes the first occurrence of an element
     @Override
     public boolean remove(Object o) {
         if (head == null) {
             return false;
-        }
-        else {
-            Node previous = null;
+        } else {
             Node current = head;
-            if (head.getData().equals(o)) {
-                head = head.getNext();
-            }
-            else {
-                while (current.getNext() != tail) {
-                    previous = current;
-                    current = current.getNext();
-                    if (current.getData().equals(o)) {
-                        previous.setNext(current.getNext());
+            while (true) {
+                if (current.getData().equals(o)) {
+                    if (head == current && tail == current) {
+                        head = null;
+                        tail = null;
+                    } else if (head == current) {
+                        current.getNext().setPrevious(null);
+                        head = current.getNext();
+                    } else if (tail == current) {
+                        current.getPrevious().setNext(null);
+                        tail = current.getPrevious();
+                    } else {
+                        current.getPrevious().setNext(current.getNext());
+                        current.getNext().setPrevious(current.getPrevious());
                     }
+                    size--;
                 }
+                if (current.getNext() == null) break;
+                current = current.getNext();
             }
-            size--;
             return true;
         }
     }
@@ -141,22 +143,21 @@ public class MyLinkedList implements Collection {
     public void clear() {
         size = 0;
         head = null;
+        tail = null;
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         Node current = head;
-        while (current != tail) {
-            if (current.getNext() == tail) {
-                result.append(current.getData());
-            }
-            else {
-                result.append(current.getData()).append(", ");
+        while (current != null) {
+            if (current.getNext() == null) {
+                result.append(current);
+            } else {
+                result.append(current).append(", ");
             }
             current = current.getNext();
         }
         return result.toString();
     }
-
 }
