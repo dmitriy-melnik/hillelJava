@@ -22,7 +22,7 @@ public class MyLinkedList implements Collection {
     public boolean contains(Object o) {
         Node current = head;
         while (current != tail) {
-            if (current.getData() == o) {
+            if (current.getData().equals(o)) {
                 return true;
             }
             current = current.getNext();
@@ -96,14 +96,14 @@ public class MyLinkedList implements Collection {
         else {
             Node previous = null;
             Node current = head;
-            if (head.getData() == o) {
+            if (head.getData().equals(o)) {
                 head = head.getNext();
             }
             else {
                 while (current.getNext() != tail) {
                     previous = current;
                     current = current.getNext();
-                    if (current.getData() == o) {
+                    if (current.getData().equals(o)) {
                         previous.setNext(current.getNext());
                     }
                 }
@@ -138,6 +138,7 @@ public class MyLinkedList implements Collection {
 
     @Override
     public void clear() {
+        size = 0;
         head = null;
     }
 
