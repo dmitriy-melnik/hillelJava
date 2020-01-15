@@ -10,8 +10,12 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println(fibonachi(10)); // 55
-        System.out.println(fibonachi(100)); // no answer
-        System.out.println(fibonachi(1000)); // no answer
+        //System.out.println(fibonachi(100)); // no answer
+        //System.out.println(fibonachi(1000)); // no answer
+
+        System.out.println(fib(10));
+        System.out.println(fib(100));
+        System.out.println(fib(1000));
 
     }
 
@@ -19,6 +23,17 @@ public class Main {
         if (number == 0) return 0;
         if (number == 1) return 1;
         return fibonachi(number - 1) + fibonachi(number - 2);
+    }
+
+    public static double fib(double number) {
+        double n0 = 0;
+        double n1 = 1;
+        for (int i = 2; i <= number; ++i) {
+            double next = n0 + n1;
+            n0 = n1;
+            n1 = next;
+        }
+        return n1;
     }
 }
 
