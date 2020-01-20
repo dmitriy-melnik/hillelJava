@@ -40,7 +40,7 @@ public class Main {
 // TASK 8, TEST --------------------------------------------------------------------------------------------------------
 
     /*
-    ArrayObject a = new ArrayObject();
+    MyArrayList a = new MyArrayList();
         a.add(1);
         a.add(2);
         a.add(3);
@@ -61,7 +61,7 @@ public class Main {
         System.out.println("After addAll (это будет наш массив): " + a);
         System.out.println("Contains " + list + ": " + a.containsAll(list));
 
-    ArrayObject a1 = new ArrayObject();
+    MyArrayList a1 = new MyArrayList();
         a1.add(1);
         a1.add(2);
         a1.add(3);
@@ -73,7 +73,7 @@ public class Main {
         a1.retainAll(list);
         System.out.println("After retainAll" + list + ": " + a1);
 
-    ArrayObject a2 = new ArrayObject();
+    MyArrayList a2 = new MyArrayList();
         a2.add(1);
         a2.add(2);
         a2.add(3);

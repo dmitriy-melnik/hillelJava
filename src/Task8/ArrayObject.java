@@ -18,8 +18,7 @@ public class ArrayObject implements Collection {
     public boolean isEmpty() {
         if (size() == 0) {
             return true;
-        }
-        else return false;
+        } else return false;
         /*boolean check = true;
         for (Object o : array) {
             if (o != null) {
@@ -54,8 +53,7 @@ public class ArrayObject implements Collection {
     public boolean add(Object o) {
         if (o == null) {
             return false;
-        }
-        else {
+        } else {
             array = Arrays.copyOf(array, array.length + 1);
             array[array.length - 1] = o;
             return true;
@@ -64,22 +62,15 @@ public class ArrayObject implements Collection {
 
     @Override
     public boolean remove(Object o) {
-        int count = 0;
-        for (Object object : array) {
-            if (object == o) {
-                count++;
+        int i = -1;
+        for (int j = 0; j < array.length; j++) {
+            if (array[j] == o) {
+                i = j;
+                break;
             }
         }
 
-        for (int n = 0; n < count; n++) {
-            int i = -1;
-            for (int j = 0; j < array.length; j++) {
-                if (array[j] == o) {
-                    i = j;
-                    break;
-                }
-            }
-
+        if (i != -1) {
             Object[] firstPart = new Object[i];
             for (int j = 0; j < firstPart.length; j++) {
                 firstPart[j] = array[j];
@@ -94,12 +85,9 @@ public class ArrayObject implements Collection {
             for (Object object : secondPart) {
                 add(object);
             }
+            return true;
         }
-
-        if (count == 0) {
-            return false;
-        }
-        else return true;
+        else return false;
     }
 
     @Override

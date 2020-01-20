@@ -108,12 +108,13 @@ public class MyLinkedList implements Collection {
                         current.getNext().setPrevious(current.getPrevious());
                     }
                     size--;
+                    return true;
                 }
                 if (current.getNext() == null) break;
                 current = current.getNext();
             }
-            return true;
         }
+        return false;
     }
 
     @Override
