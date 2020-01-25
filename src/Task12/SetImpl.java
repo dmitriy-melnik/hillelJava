@@ -134,21 +134,24 @@ public class SetImpl implements Set {
 
     // рекурсивная реализация добавления элемента
     public boolean addRecursion(Object o) {
-        head = recursionAdd(o, head);
-        size++;
-        return true;
+        if (!(o instanceof Integer) || o == null) {
+            return false;
+        } else {
+            head = recursionAdd(o, head);
+            size++;
+            return true;
+        }
     }
 
     private Node recursionAdd(Object o, Node node) {
-        if (o == null || !(o instanceof Integer) || node == null) {
+        if (node == null) {
             return new Node((int) o, null, null);
         }
         if ((int) o > node.getData()) {
             node.setRight(recursionAdd(o, node.getRight()));
         } else if ((int) o < node.getData()) {
             node.setLeft(recursionAdd(o, node.getLeft()));
-        }
-        else {
+        } else {
             return node;
         }
         return node;
