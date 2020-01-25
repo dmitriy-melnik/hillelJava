@@ -29,6 +29,7 @@ public class MyArrayList implements List {
 
     @Override
     public Iterator iterator() {
+
         return new MyArrayListIterator(array);
     }
 
