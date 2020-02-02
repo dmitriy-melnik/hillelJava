@@ -1,5 +1,6 @@
 package Task12;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -7,21 +8,22 @@ import java.util.Set;
 public class SetImpl implements Set {
 
     private class Node {
-        private int data;
+        //private int key;
+        private Object data;
         private Node left;
         private Node right;
 
-        public Node(int data, Node left, Node right) {
+        public Node(Object data, Node left, Node right) {
             this.data = data;
             this.left = left;
             this.right = right;
         }
 
-        public int getData() {
+        public Object getData() {
             return data;
         }
 
-        public void setData(int data) {
+        public void setData(Object data) {
             this.data = data;
         }
 
@@ -57,19 +59,19 @@ public class SetImpl implements Set {
 
     @Override
     public boolean contains(Object o) {
-        if (o == null || !(o instanceof Integer)) {
+        if (o == null || !(o instanceof Comparable)) {
             return false;
         } else {
             Node current = head;
             while (true) {
                 if (o.equals(current.getData())) {
                     return true;
-                } else if ((int) o > current.getData()) {
+                } else if (((Comparable) o).compareTo(current.getData()) > 0) {
                     if (current.getRight() == null) {
                         return false;
                     }
                     current = current.getRight();
-                } else if ((int) o < current.getData()) {
+                } else if (((Comparable) o).compareTo(current.getData()) < 0) {
                     if (current.getLeft() == null) {
                         return false;
                     }
@@ -85,13 +87,13 @@ public class SetImpl implements Set {
     }
 
     private boolean recursionSearch(Object o, Node node) {
-        if (o == null || !(o instanceof Integer) || node == null) {
+        if (o == null || !(o instanceof Comparable) || node == null) {
             return false;
         }
         if (o.equals(node.getData())) {
             return true;
         }
-        if ((int) o < node.getData()) {
+        if (((Comparable) o).compareTo(node.getData()) < 0) {
             return recursionSearch(o, node.getLeft());
         } else {
             return recursionSearch(o, node.getRight());
@@ -100,10 +102,10 @@ public class SetImpl implements Set {
 
     @Override
     public boolean add(Object o) {
-        if (o == null || !(o instanceof Integer)) {
+        if (o == null || !(o instanceof Comparable)) {
             return false;
         } else {
-            Node node = new Node((int) o, null, null);
+            Node node = new Node(o, null, null);
             Node current = head;
             if (head == null) {
                 head = node;
@@ -112,13 +114,13 @@ public class SetImpl implements Set {
                     if (o.equals(current.getData())) {
                         return false;
                     }
-                    if ((int) o > current.getData()) {
+                    if (((Comparable) o).compareTo(current.getData()) > 0) {
                         if (current.getRight() == null) {
                             current.setRight(node);
                             break;
                         }
                         current = current.getRight();
-                    } else if ((int) o < current.getData()) {
+                    } else if (((Comparable) o).compareTo(current.getData()) < 0) {
                         if (current.getLeft() == null) {
                             current.setLeft(node);
                             break;
@@ -134,7 +136,7 @@ public class SetImpl implements Set {
 
     // рекурсивная реализация добавления элемента
     public boolean addRecursion(Object o) {
-        if (!(o instanceof Integer) || o == null) {
+        if (!(o instanceof Comparable) || o == null) {
             return false;
         } else {
             head = recursionAdd(o, head);
@@ -144,12 +146,12 @@ public class SetImpl implements Set {
     }
 
     private Node recursionAdd(Object o, Node node) {
-        if (node == null) {
-            return new Node((int) o, null, null);
+        if (node == null || !(o instanceof Comparable)) {
+            return new Node(o, null, null);
         }
-        if ((int) o > node.getData()) {
+        if (((Comparable) o).compareTo(node.getData()) > 0) {
             node.setRight(recursionAdd(o, node.getRight()));
-        } else if ((int) o < node.getData()) {
+        } else if (((Comparable) o).compareTo(node.getData()) < 0) {
             node.setLeft(recursionAdd(o, node.getLeft()));
         } else {
             return node;
