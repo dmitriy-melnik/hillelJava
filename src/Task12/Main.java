@@ -1,5 +1,8 @@
 package Task12;
 
+import sun.reflect.generics.tree.Tree;
+
+import java.util.Comparator;
 import java.util.TreeSet;
 
 public class Main {
@@ -39,19 +42,25 @@ public class Main {
         System.out.println("Contains (recursion) 67: " + bin.containsRecursion(67));*/
         System.out.println("Contains hello: " + bin.contains("hello"));
 
-        SetImpl bin2 = new SetImpl();
-        bin2.addRecursion(10);
-        bin2.addRecursion(7);
-        bin2.addRecursion(15);
-        bin2.addRecursion(5);
-        bin2.addRecursion(9);
-        bin2.addRecursion(11);
-        bin2.addRecursion(14);
+        TestForCompare t1 = new TestForCompare(6);
+        TestForCompare t2 = new TestForCompare(7);
+        TestForCompare t3 = new TestForCompare(2);
+        SetImpl bin2 = new SetImpl((o1, o2) -> {
+            if (o1 instanceof TestForCompare && o2 instanceof TestForCompare) {
+                return ((TestForCompare) o1).getX() - ((TestForCompare) o2).getX();
+            }
+            return 0;
+        });
+        bin2.add(t1);
+        bin2.add(t2);
+        bin2.add(t3);
 
-        System.out.println("\nAfter add recursively: ");
+        System.out.println("\n");
         bin2.printPreorder();
         System.out.println();
         bin2.printInorder();
         System.out.println();
+
+
     }
 }

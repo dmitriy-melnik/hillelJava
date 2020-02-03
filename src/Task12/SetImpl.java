@@ -1,51 +1,19 @@
 package Task12;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class SetImpl implements Set {
 
-    private class Node {
-        //private int key;
-        private Object data;
-        private Node left;
-        private Node right;
-
-        public Node(Object data, Node left, Node right) {
-            this.data = data;
-            this.left = left;
-            this.right = right;
-        }
-
-        public Object getData() {
-            return data;
-        }
-
-        public void setData(Object data) {
-            this.data = data;
-        }
-
-        public Node getLeft() {
-            return left;
-        }
-
-        public void setLeft(Node left) {
-            this.left = left;
-        }
-
-        public Node getRight() {
-            return right;
-        }
-
-        public void setRight(Node right) {
-            this.right = right;
-        }
-    }
-
     private Node head;
     private int size = 0;
+    private Comparator comparator;
+
+    public SetImpl() {
+    }
+
+    public SetImpl(Comparator comparator) {
+        this.comparator = comparator;
+    }
 
     @Override
     public int size() {
@@ -59,19 +27,41 @@ public class SetImpl implements Set {
 
     @Override
     public boolean contains(Object o) {
-        if (o == null || !(o instanceof Comparable)) {
+        if (o == null) {
             return false;
-        } else {
+        }
+        if (comparator != null) {
             Node current = head;
             while (true) {
-                if (o.equals(current.getData())) {
+                if (comparator.compare(o, current.getData()) == 0) {
                     return true;
-                } else if (((Comparable) o).compareTo(current.getData()) > 0) {
+                }
+                if (comparator.compare(o, current.getData()) > 0) {
                     if (current.getRight() == null) {
                         return false;
                     }
                     current = current.getRight();
-                } else if (((Comparable) o).compareTo(current.getData()) < 0) {
+                }
+                if (comparator.compare(o, current.getData()) < 0) {
+                    if (current.getLeft() == null) {
+                        return false;
+                    }
+                    current = current.getLeft();
+                }
+            }
+        } else if (o instanceof Comparable) {
+            Node current = head;
+            while (true) {
+                if (((Comparable) o).compareTo(current.getData()) == 0) {
+                    return true;
+                }
+                if (((Comparable) o).compareTo(current.getData()) > 0) {
+                    if (current.getRight() == null) {
+                        return false;
+                    }
+                    current = current.getRight();
+                }
+                if (((Comparable) o).compareTo(current.getData()) < 0) {
                     if (current.getLeft() == null) {
                         return false;
                     }
@@ -79,9 +69,10 @@ public class SetImpl implements Set {
                 }
             }
         }
+        return false;
     }
 
-    // рекурсиваная реализация поиска
+    /*// рекурсиваная реализация поиска
     public boolean containsRecursion(Object o) {
         return recursionSearch(o, head);
     }
@@ -98,18 +89,42 @@ public class SetImpl implements Set {
         } else {
             return recursionSearch(o, node.getRight());
         }
-    }
+    }*/
 
     @Override
     public boolean add(Object o) {
-        if (o == null || !(o instanceof Comparable)) {
+        if (o == null) {
             return false;
         } else {
             Node node = new Node(o, null, null);
             Node current = head;
-            if (head == null) {
-                head = node;
-            } else {
+            if (comparator != null) {
+                if (head == null) {
+                    head = node;
+                }
+                while (true) {
+                    if (comparator.compare(o, current.getData()) == 0) {
+                        return false;
+                    }
+                    if (comparator.compare(o, current.getData()) > 0) {
+                        if (current.getRight() == null) {
+                            current.setRight(node);
+                            break;
+                        }
+                        current = current.getRight();
+                    }
+                    if (comparator.compare(o, current.getData()) < 0) {
+                        if (current.getLeft() == null) {
+                            current.setLeft(node);
+                            break;
+                        }
+                        current = current.getLeft();
+                    }
+                }
+            } else if (o instanceof Comparable) {
+                if (head == null) {
+                    head = node;
+                }
                 while (true) {
                     if (o.equals(current.getData())) {
                         return false;
@@ -120,7 +135,8 @@ public class SetImpl implements Set {
                             break;
                         }
                         current = current.getRight();
-                    } else if (((Comparable) o).compareTo(current.getData()) < 0) {
+                    }
+                    if (((Comparable) o).compareTo(current.getData()) < 0) {
                         if (current.getLeft() == null) {
                             current.setLeft(node);
                             break;
@@ -134,7 +150,8 @@ public class SetImpl implements Set {
         }
     }
 
-    // рекурсивная реализация добавления элемента
+
+    /*// рекурсивная реализация добавления элемента
     public boolean addRecursion(Object o) {
         if (!(o instanceof Comparable) || o == null) {
             return false;
@@ -157,7 +174,7 @@ public class SetImpl implements Set {
             return node;
         }
         return node;
-    }
+    }*/
 
     @Override
     public void clear() {
@@ -238,6 +255,42 @@ public class SetImpl implements Set {
     @Override
     public Object[] toArray(Object[] a) {
         return new Object[0];
+    }
+
+    private class Node {
+        private Object data;
+        private Node left;
+        private Node right;
+
+        public Node(Object data, Node left, Node right) {
+            this.data = data;
+            this.left = left;
+            this.right = right;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public void setData(Object data) {
+            this.data = data;
+        }
+
+        public Node getLeft() {
+            return left;
+        }
+
+        public void setLeft(Node left) {
+            this.left = left;
+        }
+
+        public Node getRight() {
+            return right;
+        }
+
+        public void setRight(Node right) {
+            this.right = right;
+        }
     }
 
 }
