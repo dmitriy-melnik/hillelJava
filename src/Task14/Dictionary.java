@@ -1,33 +1,21 @@
 package Task14;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 
 public class Dictionary {
 
-    private ArrayList<Pair> words = new ArrayList<Pair>();
+    private HashMap<String, String> words = new HashMap<>();
 
     public void addWordPair(String english, String russian) {
-        words.add(new Pair(english, russian));
+        words.put(english, russian);
     }
 
     public void deleteWordPair(String english, String russian) {
-        Iterator<Pair> wordsIterator = words.iterator();
-        while (wordsIterator.hasNext()) {
-            Pair p = wordsIterator.next();
-            if (p.getWord().equals(english) && p.getRussianTranslate().equals(russian)) {
-                wordsIterator.remove();
-            }
-        }
+        words.remove(english, russian);
     }
 
     public String getRussianTranslate(String english) {
-        for (Pair p : words) {
-            if (p.getWord().equals(english)) {
-                return p.getRussianTranslate();
-            }
-        }
-        return "";
+        return words.get(english) + "";
     }
 
     @Override
@@ -35,7 +23,7 @@ public class Dictionary {
         return words + "";
     }
 
-    public static class Pair {
+    /*public static class Pair {
         private String word;
         private String russianTranslate;
 
@@ -64,5 +52,5 @@ public class Dictionary {
         public String toString() {
             return word + " - " + russianTranslate;
         }
-    }
+    }*/
 }
