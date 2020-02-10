@@ -12,6 +12,11 @@ public class Main {
         map.put("glass", "стекло");
         map.put("hello", "дарова");
         map.print();
+        //map.resize(200);
+
+        Collection values = map.values();
+        System.out.println(values);
+
 
         System.out.println(map.containsKey("gvhjh"));
         System.out.println(map.containsKey("glass"));

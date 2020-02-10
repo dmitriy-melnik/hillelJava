@@ -4,13 +4,14 @@ import java.util.*;
 
 public class HashMapIml implements Map {
     private int size = 0;
-    private Entry[] array = new Entry[size];
+    private int capacity = 0;
+    private Entry[] array = new Entry[capacity];
 
     public HashMapIml() {
     }
 
-    public HashMapIml(int size) {
-        this.size = size;
+    public HashMapIml(int capacity) {
+        this.capacity = capacity;
     }
 
     @Override
@@ -25,13 +26,13 @@ public class HashMapIml implements Map {
 
     @Override
     public boolean containsKey(Object key) {
-        int hash = Math.abs(key.hashCode()) % size;
+        int hash = Math.abs(key.hashCode()) % capacity;
         return array[hash] != null;
     }
 
     @Override
     public boolean containsValue(Object value) {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < capacity; i++) {
             if (array[i] != null) {
                 Entry current = array[i];
                 while (current != null) {
@@ -47,7 +48,7 @@ public class HashMapIml implements Map {
 
     @Override
     public Object get(Object key) {
-        int hash = Math.abs(key.hashCode()) % size;
+        int hash = Math.abs(key.hashCode()) % capacity;
         if (array[hash] != null) {
             Entry current = array[hash];
             while (true) {
@@ -65,12 +66,12 @@ public class HashMapIml implements Map {
 
     @Override
     public Object put(Object key, Object value) {
-        if (size == 0) {
+        if (capacity == 0) {
             array = new Entry[100];
-            size = 100;
+            capacity = 100;
         }
         Entry entry = new Entry(key, value);
-        int hash = Math.abs(entry.key.hashCode()) % size;
+        int hash = Math.abs(entry.key.hashCode()) % capacity;
         if (array[hash] == null) {
             array[hash] = entry;
         } else {
@@ -86,7 +87,7 @@ public class HashMapIml implements Map {
 
     @Override
     public Object remove(Object key) {
-        int hash = Math.abs(key.hashCode()) % size;
+        int hash = Math.abs(key.hashCode()) % capacity;
         array[hash] = null;
         size--;
         return true;
@@ -94,7 +95,7 @@ public class HashMapIml implements Map {
 
     @Override
     public void putAll(Map m) {
-        if (size != 0) {
+        if (capacity != 0) {
             Set mapInputSet = m.entrySet();
             for (Object o : mapInputSet) {
                 Object key = ((Map.Entry) o).getKey();
@@ -108,12 +109,13 @@ public class HashMapIml implements Map {
     @Override
     public void clear() {
         array = new Entry[0];
+        size = 0;
     }
 
     @Override
     public Set keySet() {
         Set ketSet = new HashSet();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < capacity; i++) {
             if (array[i] != null) {
                 keySet().add(array[i].key);
             }
@@ -124,16 +126,12 @@ public class HashMapIml implements Map {
     @Override
     public Collection values() {
         Collection values = new ArrayList();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < capacity; i++) {
             if (array[i] != null) {
                 Entry current = array[i];
-                if (current.next == null) {
-                    values.add(array[i].value);
-                } else {
-                    while (current != null) {
-                        values.add(current.value);
-                        current = current.next;
-                    }
+                while (current != null) {
+                    values.add(current.value);
+                    current = current.next;
                 }
             }
         }
@@ -143,16 +141,12 @@ public class HashMapIml implements Map {
     @Override
     public Set<Entry> entrySet() {
         Set<Entry> entrySet = new HashSet<>();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < capacity; i++) {
             if (array[i] != null) {
                 Entry current = array[i];
-                if (current.next == null) {
-                    entrySet.add(array[i]);
-                } else {
-                    while (current != null) {
-                        entrySet.add(current);
-                        current = current.next;
-                    }
+                while (current != null) {
+                    entrySet.add(current);
+                    current = current.next;
                 }
             }
         }
@@ -160,8 +154,8 @@ public class HashMapIml implements Map {
     }
 
     public void print() {
-        if (size != 0) {
-            for (int i = 0; i < size; i++) {
+        if (capacity != 0) {
+            for (int i = 0; i < capacity; i++) {
                 if (array[i] != null) {
                     Entry current = array[i];
                     while (current != null) {
@@ -173,20 +167,34 @@ public class HashMapIml implements Map {
         }
     }
 
-    /*public void resize(int newSize) {
-        HashMapIml newMap = new HashMapIml(newSize);
-        if (newSize > size) {
-            for (int i = 0; i < size; i++) {
+    public void resize(int newCapacity) {
+        if (newCapacity > capacity) {
+            Entry[] newArray = new Entry[newCapacity];
+            for (int i = 0; i < capacity; i++) {
                 if (array[i] != null) {
-                    Object key = array[i].key;
-                    Object value = array[i].value;
-                    newMap.put(key, value);
+                    Entry current = array[i];
+                    while (current != null) {
+                        Object key = current.key;
+                        Object value = current.value;
+                        Entry entry = new Entry(key, value);
+                        int hash = Math.abs(entry.key.hashCode()) % newCapacity;
+                        if (newArray[hash] == null) {
+                            newArray[hash] = entry;
+                        } else {
+                            Entry newCurrent = newArray[hash];
+                            while (newCurrent.next != null) {
+                                newCurrent = newCurrent.next;
+                            }
+                            newCurrent.next = entry;
+                        }
+                        current = current.next;
+                    }
                 }
             }
-            size = newSize;
-            array = newMap.array;
+            capacity = newCapacity;
+            array = newArray;
         }
-    }*/
+    }
 
     private class Entry {
         private Object key;
