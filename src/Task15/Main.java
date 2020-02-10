@@ -1,7 +1,6 @@
 package Task15;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,6 +12,7 @@ public class Main {
         map.put("glass", "стекло");
         map.put("hello", "дарова");
         map.print();
+
         System.out.println(map.containsKey("gvhjh"));
         System.out.println(map.containsKey("glass"));
         System.out.println(map.containsValue("яблоко"));
@@ -20,6 +20,7 @@ public class Main {
 
         HashMapIml map2 = new HashMapIml();
         map.put("word1", "слово1");
+        map.put("word1", "слово111");
         map.put("word2", 22);
         map.put("word3", 33);
 

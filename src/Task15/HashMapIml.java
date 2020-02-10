@@ -60,7 +60,7 @@ public class HashMapIml implements Map {
                 current = current.next;
             }
         }
-        return null;
+        return true;
     }
 
     @Override
@@ -80,12 +80,16 @@ public class HashMapIml implements Map {
             }
             current.next = entry;
         }
+        size++;
         return true;
     }
 
     @Override
     public Object remove(Object key) {
-        return null;
+        int hash = Math.abs(key.hashCode()) % size;
+        array[hash] = null;
+        size--;
+        return true;
     }
 
     @Override
@@ -96,6 +100,7 @@ public class HashMapIml implements Map {
                 Object key = ((Map.Entry) o).getKey();
                 Object value = ((Map.Entry) o).getValue();
                 put(key, value);
+                size++;
             }
         }
     }
@@ -121,7 +126,15 @@ public class HashMapIml implements Map {
         Collection values = new ArrayList();
         for (int i = 0; i < size; i++) {
             if (array[i] != null) {
-                values.add(array[i].value);
+                Entry current = array[i];
+                if (current.next == null) {
+                    values.add(array[i].value);
+                } else {
+                    while (current != null) {
+                        values.add(current.value);
+                        current = current.next;
+                    }
+                }
             }
         }
         return values;
@@ -132,7 +145,15 @@ public class HashMapIml implements Map {
         Set<Entry> entrySet = new HashSet<>();
         for (int i = 0; i < size; i++) {
             if (array[i] != null) {
-                entrySet.add(array[i]);
+                Entry current = array[i];
+                if (current.next == null) {
+                    entrySet.add(array[i]);
+                } else {
+                    while (current != null) {
+                        entrySet.add(current);
+                        current = current.next;
+                    }
+                }
             }
         }
         return entrySet;
