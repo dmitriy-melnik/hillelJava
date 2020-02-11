@@ -14,6 +14,8 @@ public class Main {
         map.print();
         //map.resize(200);
 
+        System.out.println(map.keySet());
+
         Collection values = map.values();
         System.out.println(values);
 
