@@ -88,8 +88,12 @@ public class HashMapIml implements Map {
     @Override
     public Object remove(Object key) {
         int hash = Math.abs(key.hashCode()) % capacity;
-        array[hash] = null;
-        size--;
+        if (hash >= 0 || hash < capacity) {
+            if (array[hash] != null) {
+                array[hash] = null;
+                size--;
+            }
+        }
         return true;
     }
 
