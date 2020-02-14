@@ -1,5 +1,6 @@
 package Task15;
 
+import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.util.*;
 
 public class HashMapIml implements Map {
@@ -28,8 +29,12 @@ public class HashMapIml implements Map {
     public boolean containsKey(Object key) {
         if (key != null) {
             int hash = Math.abs(key.hashCode()) % capacity;
-            if (array[hash] != null && array[hash].key.equals(key)) {
-                return true;
+            Entry current = array[hash];
+            while (current != null) {
+                if (current.key.equals(key)) {
+                    return true;
+                }
+                current = current.next;
             }
         }
         return false;
@@ -58,11 +63,11 @@ public class HashMapIml implements Map {
             if (array[hash] != null) {
                 Entry current = array[hash];
                 while (true) {
+                    if (current == null) {
+                        return false;
+                    }
                     if (current.key.equals(key)) {
                         return current.value;
-                    }
-                    if (current == null) {
-                        return null;
                     }
                     current = current.next;
                 }
@@ -75,8 +80,8 @@ public class HashMapIml implements Map {
     public Object put(Object key, Object value) {
         if (key != null) {
             if (capacity == 0) {
-                array = new Entry[100];
-                capacity = 100;
+                array = new Entry[10];
+                capacity = 10;
             }
             Entry entry = new Entry(key, value);
             int hash = Math.abs(entry.key.hashCode()) % capacity;
@@ -99,9 +104,21 @@ public class HashMapIml implements Map {
         if (key != null) {
             int hash = Math.abs(key.hashCode()) % capacity;
             if (hash >= 0 || hash < capacity) {
-                if (array[hash] != null) {
-                    array[hash] = null;
-                    size--;
+                Entry current = array[hash];
+                if (current.next == null) {
+                    if (current.key.equals(key)) {
+                        current = null;
+                        size--;
+                    }
+                } else {
+                    while (current.next != null) {
+                        if (current.next.key.equals(key)) {
+                            current.next = current.next.next;
+                            size--;
+                            break;
+                        }
+                        current = current.next;
+                    }
                 }
             }
         }
@@ -131,8 +148,10 @@ public class HashMapIml implements Map {
     public Set keySet() {
         Set keySet = new HashSet();
         for (int i = 0; i < capacity; i++) {
-            if (array[i] != null) {
-                keySet.add(array[i].key);
+            Entry current = array[i];
+            while (current != null) {
+                keySet.add(current.key);
+                current = current.next;
             }
         }
         return keySet;

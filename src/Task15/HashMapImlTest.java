@@ -11,27 +11,28 @@ import java.util.Set;
 public class HashMapImlTest {
 
     @Test
-    public void put(){
+    public void put() {
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         Assert.assertEquals("привет", map.get("hello"));
     }
 
     @Test
-    public void get(){
+    public void get() {
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         Assert.assertEquals("привет", map.get("hello"));
     }
 
     @Test
-    public void remove(){
+    public void remove() {
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
         map.put("apple", "яблоко");
-        map.remove("hello");
-        Assert.assertEquals(false, map.get("hello"));
+        map.remove("apple");
+        Assert.assertEquals("автомобиль", map.get("car"));
+        Assert.assertEquals(false, map.get("apple"));
     }
 
     @Test
@@ -52,16 +53,17 @@ public class HashMapImlTest {
     }
 
     @Test
-    public void containsKey(){
+    public void containsKey() {
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
-        Assert.assertEquals(true, map.containsKey("car"));
+        map.put("apple", "яблоко");
+        Assert.assertEquals(true, map.containsKey("apple"));
         Assert.assertEquals(false, map.containsKey("sad"));
     }
 
     @Test
-    public void containsValue(){
+    public void containsValue() {
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
@@ -70,7 +72,7 @@ public class HashMapImlTest {
     }
 
     @Test
-    public void putAll(){
+    public void putAll() {
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
@@ -83,7 +85,7 @@ public class HashMapImlTest {
     }
 
     @Test
-    public void clear(){
+    public void clear() {
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
@@ -92,16 +94,18 @@ public class HashMapImlTest {
     }
 
     @Test
-    public void keySet(){
+    public void keySet() {
         Set keySet = new HashSet();
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
+        map.put("apple", "яблоко");
         keySet = map.keySet();
 
         Set controlSet = new HashSet();
         controlSet.add("hello");
         controlSet.add("car");
+        controlSet.add("apple");
 
         Assert.assertEquals(keySet, controlSet);
 

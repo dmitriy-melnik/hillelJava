@@ -4,6 +4,14 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+/*
+        System.out.println("hello: " + "hello".hashCode() % 10);
+        System.out.println("car: " + "car".hashCode() % 10);
+        System.out.println("apple: " + "apple".hashCode() % 10);
+        System.out.println("science: " + "science".hashCode() % 10);
+        System.out.println("glass" + "glass".hashCode() % 10);
+*/
+
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
