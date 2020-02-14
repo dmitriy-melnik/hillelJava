@@ -12,6 +12,7 @@ public class Main {
         System.out.println("glass" + "glass".hashCode() % 10);
 */
 
+        System.out.println("Git commit");
         HashMapIml map = new HashMapIml();
         map.put("hello", "привет");
         map.put("car", "автомобиль");
