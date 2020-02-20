@@ -2,16 +2,16 @@ package Task12;
 
 import java.util.*;
 
-public class SetImpl implements Set {
+public class SetImpl<E> implements Set<E> {
 
-    private Node head;
+    private Node<E> head;
     private int size = 0;
-    private Comparator comparator;
+    private Comparator<E> comparator;
 
     public SetImpl() {
     }
 
-    public SetImpl(Comparator comparator) {
+    public SetImpl(Comparator<E> comparator) {
         this.comparator = comparator;
     }
 
@@ -30,44 +30,48 @@ public class SetImpl implements Set {
         if (o == null) {
             return false;
         }
-        if (comparator != null) {
-            Node current = head;
-            while (true) {
-                if (comparator.compare(o, current.getData()) == 0) {
-                    return true;
-                }
-                if (comparator.compare(o, current.getData()) > 0) {
-                    if (current.getRight() == null) {
-                        return false;
+        try {
+            if (comparator != null) {
+                Node current = head;
+                while (true) {
+                    if (comparator.compare((E) o, (E) current.getData()) == 0) {
+                        return true;
                     }
-                    current = current.getRight();
-                }
-                if (comparator.compare(o, current.getData()) < 0) {
-                    if (current.getLeft() == null) {
-                        return false;
+                    if (comparator.compare((E) o, (E)current.getData()) > 0) {
+                        if (current.getRight() == null) {
+                            return false;
+                        }
+                        current = current.getRight();
                     }
-                    current = current.getLeft();
+                    if (comparator.compare((E) o, (E) current.getData()) < 0) {
+                        if (current.getLeft() == null) {
+                            return false;
+                        }
+                        current = current.getLeft();
+                    }
+                }
+            } else if (o instanceof Comparable) {
+                Node current = head;
+                while (true) {
+                    if (((Comparable) o).compareTo(current.getData()) == 0) {
+                        return true;
+                    }
+                    if (((Comparable) o).compareTo(current.getData()) > 0) {
+                        if (current.getRight() == null) {
+                            return false;
+                        }
+                        current = current.getRight();
+                    }
+                    if (((Comparable) o).compareTo(current.getData()) < 0) {
+                        if (current.getLeft() == null) {
+                            return false;
+                        }
+                        current = current.getLeft();
+                    }
                 }
             }
-        } else if (o instanceof Comparable) {
-            Node current = head;
-            while (true) {
-                if (((Comparable) o).compareTo(current.getData()) == 0) {
-                    return true;
-                }
-                if (((Comparable) o).compareTo(current.getData()) > 0) {
-                    if (current.getRight() == null) {
-                        return false;
-                    }
-                    current = current.getRight();
-                }
-                if (((Comparable) o).compareTo(current.getData()) < 0) {
-                    if (current.getLeft() == null) {
-                        return false;
-                    }
-                    current = current.getLeft();
-                }
-            }
+        } catch (ClassCastException e) {
+            return false;
         }
         return false;
     }
@@ -92,56 +96,58 @@ public class SetImpl implements Set {
     }*/
 
     @Override
-    public boolean add(Object o) {
-        if (o == null) {
+    public boolean add(E e) {
+        if (e == null) {
             return false;
         } else {
-            Node node = new Node(o, null, null);
+            Node node = new Node(e, null, null);
             Node current = head;
             if (comparator != null) {
                 if (head == null) {
                     head = node;
-                }
-                while (true) {
-                    if (comparator.compare(o, current.getData()) == 0) {
-                        return false;
-                    }
-                    if (comparator.compare(o, current.getData()) > 0) {
-                        if (current.getRight() == null) {
-                            current.setRight(node);
-                            break;
+                } else {
+                    while (true) {
+                        if (comparator.compare(e, (E) current.getData()) == 0) {
+                            return false;
                         }
-                        current = current.getRight();
-                    }
-                    if (comparator.compare(o, current.getData()) < 0) {
-                        if (current.getLeft() == null) {
-                            current.setLeft(node);
-                            break;
+                        if (comparator.compare(e, (E) current.getData()) > 0) {
+                            if (current.getRight() == null) {
+                                current.setRight(node);
+                                break;
+                            }
+                            current = current.getRight();
                         }
-                        current = current.getLeft();
+                        if (comparator.compare(e, (E) current.getData()) < 0) {
+                            if (current.getLeft() == null) {
+                                current.setLeft(node);
+                                break;
+                            }
+                            current = current.getLeft();
+                        }
                     }
                 }
-            } else if (o instanceof Comparable) {
+            } else if (e instanceof Comparable) {
                 if (head == null) {
                     head = node;
-                }
-                while (true) {
-                    if (o.equals(current.getData())) {
-                        return false;
-                    }
-                    if (((Comparable) o).compareTo(current.getData()) > 0) {
-                        if (current.getRight() == null) {
-                            current.setRight(node);
-                            break;
+                } else {
+                    while (true) {
+                        if (e.equals(current.getData())) {
+                            return false;
                         }
-                        current = current.getRight();
-                    }
-                    if (((Comparable) o).compareTo(current.getData()) < 0) {
-                        if (current.getLeft() == null) {
-                            current.setLeft(node);
-                            break;
+                        if (((Comparable) e).compareTo(current.getData()) > 0) {
+                            if (current.getRight() == null) {
+                                current.setRight(node);
+                                break;
+                            }
+                            current = current.getRight();
                         }
-                        current = current.getLeft();
+                        if (((Comparable) e).compareTo(current.getData()) < 0) {
+                            if (current.getLeft() == null) {
+                                current.setLeft(node);
+                                break;
+                            }
+                            current = current.getLeft();
+                        }
                     }
                 }
             }
@@ -257,22 +263,22 @@ public class SetImpl implements Set {
         return new Object[0];
     }
 
-    private class Node {
-        private Object data;
+    private class Node<T> {
+        private T data;
         private Node left;
         private Node right;
 
-        public Node(Object data, Node left, Node right) {
+        public Node(T data, Node left, Node right) {
             this.data = data;
             this.left = left;
             this.right = right;
         }
 
-        public Object getData() {
+        public T getData() {
             return data;
         }
 
-        public void setData(Object data) {
+        public void setData(T data) {
             this.data = data;
         }
 

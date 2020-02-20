@@ -5,7 +5,6 @@ import java.util.Iterator;
 public class MyLinkedListIterator implements Iterator {
 
     private Node head;
-    //private Node current = head;
 
     public MyLinkedListIterator(Node head) {
         this.head = head;

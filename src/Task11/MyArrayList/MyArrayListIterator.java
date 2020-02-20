@@ -1,8 +1,9 @@
 package Task11.MyArrayList;
 
+import javax.jws.Oneway;
 import java.util.Iterator;
 
-public class MyArrayListIterator implements Iterator {
+public class MyArrayListIterator<T> implements Iterator<T> {
 
     private int index = 0;
     private Object[] objects;
@@ -17,9 +18,9 @@ public class MyArrayListIterator implements Iterator {
     }
 
     @Override
-    public Object next() {
+    public T next() {
         Object result = objects[index];
         index++;
-        return result;
+        return (T) result;
     }
 }

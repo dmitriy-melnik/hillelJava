@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class MyLinkedList implements List {
-    private Node head;
-    private Node tail;
+public class MyLinkedList<E> implements List<E> {
+    private Node<E> head;
+    private Node<E> tail;
     private int size = 0;
 
     @Override
@@ -24,8 +24,7 @@ public class MyLinkedList implements List {
     public boolean contains(Object o) {
         if (indexOf(o) != -1) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
     @Override
@@ -34,16 +33,16 @@ public class MyLinkedList implements List {
     }
 
     @Override
-    public boolean add(Object o) {
-        if (o == null) {
+    public boolean add(E e) {
+        if (e == null) {
             return false;
         } else {
             if (head == null) {
-                Node node = new Node(o, null, null);
+                Node node = new Node(e, null, null);
                 head = node;
                 tail = node;
             } else {
-                Node node = new Node(o, tail, null);
+                Node node = new Node(e, tail, null);
                 tail.setNext(node);
                 tail = node;
             }
@@ -84,19 +83,19 @@ public class MyLinkedList implements List {
     }
 
     @Override
-    public boolean addAll(Collection c) {
-        for (Object o : c) {
-            add(o);
+    public boolean addAll(Collection<? extends E> c) {
+        for (E e : c) {
+            add(e);
         }
         return true;
     }
 
     @Override
-    public boolean addAll(int index, Collection c) {
+    public boolean addAll(int index, Collection<? extends E> c) {
         if (index >= 0 && index < size) {
             int i = index;
-            for (Object o : c) {
-                add(i, o);
+            for (E e : c) {
+                add(i, e);
                 i++;
             }
             return true;
@@ -112,13 +111,13 @@ public class MyLinkedList implements List {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         if (index >= 0 && index < size) {
             int i = 0;
             Node current = head;
             while (true) {
                 if (i == index) {
-                    return current;
+                    return (E) current.getData();
                 }
                 i++;
                 if (current.getNext() == null) break;
@@ -129,31 +128,36 @@ public class MyLinkedList implements List {
     }
 
     @Override
-    public Object set(int index, Object element) {
-        if (element != null) {
-            Object o = get(index);
-            if (o != null) {
-                Node node = (Node) o;
-                node.setData(element);
-                return true;
+    public E set(int index, E e) {
+        if (e != null) {
+            Node current = head;
+            int tempSize = 0;
+            while (true) {
+                if (tempSize == index) {
+                    current.setData(e);
+                    break;
+                }
+                if (current.getNext() == null) break;
+                tempSize++;
+                current = current.getNext();
             }
         }
-        return false;
+        return null;
     }
 
     @Override
-    public void add(int index, Object element) {
-        if (index >= 0 && index < size && element != null) {
+    public void add(int index, E e) {
+        if (index >= 0 && index < size && e != null) {
             int i = 0;
             Node current = head;
             while (true) {
                 if (i == index) {
                     if (head == current) {
-                        Node node = new Node(element, null, current);
+                        Node node = new Node(e, null, current);
                         current.setPrevious(node);
                         head = node;
                     } else {
-                        Node node = new Node(element, current.getPrevious(), current);
+                        Node node = new Node(e, current.getPrevious(), current);
                         current.getPrevious().setNext(node);
                         current.setPrevious(node);
                     }
@@ -167,15 +171,22 @@ public class MyLinkedList implements List {
     }
 
     @Override
-    public Object remove(int index) {
-        Object o = get(index);
-        Node node = (Node) o;
-        if (node != null) {
-            remove(node.getData());
-            size--;
-            return true;
+    public E remove(int index) {
+        Node current = head;
+        int tempSize = 0;
+        while (true) {
+            if (tempSize == index) {
+                if (current != null) {
+                    remove(current.getData());
+                    size--;
+                    return (E) current.getData();
+                }
+            }
+            if (current.getNext() == null) break;
+            tempSize++;
+            current = current.getNext();
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -210,14 +221,14 @@ public class MyLinkedList implements List {
     }
 
     @Override
-    public List subList(int fromIndex, int toIndex) {
-        if (fromIndex <= toIndex && fromIndex > 0 && toIndex < size) {
-            MyLinkedList sublist = new MyLinkedList();
+    public List<E> subList(int fromIndex, int toIndex) {
+        if (fromIndex <= toIndex && fromIndex > 0 && toIndex <= size) {
+            MyLinkedList<E> sublist = new MyLinkedList<E>();
             Node current = head;
             int i = 0;
             while (true) {
                 if (i >= fromIndex && i < toIndex) {
-                    sublist.add(current);
+                    sublist.add((E) current.getData());
                 }
                 if (current.getNext() == null || i == toIndex) break;
                 i++;

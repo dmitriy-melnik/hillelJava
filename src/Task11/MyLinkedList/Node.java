@@ -1,21 +1,21 @@
 package Task11.MyLinkedList;
 
-public class Node {
-    private Object data;
+public class Node<T> {
+    private T data;
     private Node previous;
     private Node next;
 
-    public Node(Object data, Node previous, Node next) {
+    public Node(T data, Node previous, Node next) {
         this.data = data;
         this.previous = previous;
         this.next = next;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 

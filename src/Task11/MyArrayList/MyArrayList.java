@@ -2,7 +2,7 @@ package Task11.MyArrayList;
 
 import java.util.*;
 
-public class MyArrayList implements List {
+public class MyArrayList<E> implements List<E> {
 
     private Object[] array = new Object[0];
 
@@ -28,19 +28,18 @@ public class MyArrayList implements List {
     }
 
     @Override
-    public Iterator iterator() {
-
-        return new MyArrayListIterator(array);
+    public Iterator<E> iterator() {
+        return new MyArrayListIterator<E>(array);
     }
 
     @Override
-    public boolean add(Object o) {
-        if (o == null) {
+    public boolean add(E e) {
+        if (e == null) {
             return false;
         }
         else {
             array = Arrays.copyOf(array, array.length + 1);
-            array[array.length - 1] = o;
+            array[array.length - 1] = e;
             return true;
         }
     }
@@ -49,7 +48,7 @@ public class MyArrayList implements List {
     public boolean remove(Object o) {
         int i = -1;
         for (int j = 0; j < array.length; j++) {
-            if (array[j] == o) {
+            if (array[j].equals(o)) {
                 i = j;
                 break;
             }
@@ -62,19 +61,19 @@ public class MyArrayList implements List {
     }
 
     @Override
-    public boolean addAll(Collection c) {
-        for (Object o : c) {
-            add(o);
+    public boolean addAll(Collection<? extends E> c) {
+        for (E e : c) {
+            add(e);
         }
         return true;
     }
 
     @Override
-    public boolean addAll(int index, Collection c) {
+    public boolean addAll(int index, Collection<? extends E> c) {
         if (index >= 0 && index < array.length) {
             int i = index;
-            for (Object o : c) {
-                add(i, o);
+            for (E e : c) {
+                add(i, e);
                 i++;
             }
             return true;
@@ -88,39 +87,42 @@ public class MyArrayList implements List {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         if (index >= 0 && index < array.length) {
-            return array[index];
+            return (E) array[index];
         }
         return null;
     }
 
     @Override
-    public Object set(int index, Object element) {
-        if (index >= 0 && index < array.length && element != null) {
-            array[index] = element;
-            return true;
+    public E set(int index, E e) {
+        E value;
+        if (index >= 0 && index < array.length && e != null) {
+            value = (E) array[index];
+            array[index] = e;
+            return value;
         }
-        return false;
+        return null;
     }
 
     @Override
-    public void add(int index, Object element) {
-        if (index >= 0 && index < array.length && element != null) {
-            add(0);
+    public void add(int index, E e) {
+        if (index >= 0 && index < array.length && e != null) {
+            add(e);
             for (int i = array.length - 1; i > index; i--) {
                 array[i] = array[i - 1];
             }
-            array[index] = element;
+            array[index] = e;
         }
     }
 
     @Override
-    public Object remove(int index) {
+    public E remove(int index) {
         if (index < 0 || index >= size()) {
-            return false;
+            return null;
         }
         else {
+            E value = (E) array[index];
             Object[] firstPart = new Object[index];
             for (int j = 0; j < firstPart.length; j++) {
                 firstPart[j] = array[j];
@@ -133,16 +135,16 @@ public class MyArrayList implements List {
 
             array = firstPart;
             for (Object object : secondPart) {
-                add(object);
+                add((E) object);
             }
-            return true;
+            return value;
         }
     }
 
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == o) {
+            if (array[i].equals(o)) {
                 return i;
             }
         }
@@ -153,7 +155,7 @@ public class MyArrayList implements List {
     public int lastIndexOf(Object o) {
         int index = -1;
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == o) {
+            if (array[i].equals(o)) {
                 index = i;
             }
         }
@@ -171,12 +173,12 @@ public class MyArrayList implements List {
     }
 
     @Override
-    public List subList(int fromIndex, int toIndex) {
+    public List<E> subList(int fromIndex, int toIndex) {
         if (fromIndex <= toIndex && fromIndex > 0 && toIndex < array.length) {
-            MyArrayList sublist = new MyArrayList();
+            MyArrayList<E> sublist = new MyArrayList<E>();
 
             for (int i = fromIndex; i < toIndex; i++) {
-                sublist.add(array[i]);
+                sublist.add((E) array[i]);
             }
             return sublist;
         }

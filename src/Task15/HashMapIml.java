@@ -3,10 +3,10 @@ package Task15;
 import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.util.*;
 
-public class HashMapIml implements Map {
+public class HashMapIml<K, V> implements Map<K, V> {
     private int size = 0;
     private int capacity = 0;
-    private Entry[] array = new Entry[capacity];
+    private Entry<K, V>[] array = new Entry[capacity];
 
     public HashMapIml() {
     }
@@ -29,12 +29,14 @@ public class HashMapIml implements Map {
     public boolean containsKey(Object key) {
         if (key != null) {
             int hash = Math.abs(key.hashCode()) % capacity;
-            Entry current = array[hash];
-            while (current != null) {
-                if (current.key.equals(key)) {
-                    return true;
+            if (array[hash] != null) {
+                Entry<K, V> current = array[hash];
+                while (current != null) {
+                    if (current.key.equals(key)) {
+                        return true;
+                    }
+                    current = current.next;
                 }
-                current = current.next;
             }
         }
         return false;
@@ -44,7 +46,7 @@ public class HashMapIml implements Map {
     public boolean containsValue(Object value) {
         for (int i = 0; i < capacity; i++) {
             if (array[i] != null) {
-                Entry current = array[i];
+                Entry<K, V> current = array[i];
                 while (current != null) {
                     if (current.value.equals(value)) {
                         return true;
@@ -57,38 +59,38 @@ public class HashMapIml implements Map {
     }
 
     @Override
-    public Object get(Object key) {
+    public V get(Object key) {
         if (key != null) {
             int hash = Math.abs(key.hashCode()) % capacity;
             if (array[hash] != null) {
                 Entry current = array[hash];
                 while (true) {
                     if (current == null) {
-                        return false;
+                        return null;
                     }
                     if (current.key.equals(key)) {
-                        return current.value;
+                        return (V) current.value;
                     }
                     current = current.next;
                 }
             }
         }
-        return false;
+        return null;
     }
 
     @Override
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         if (key != null) {
             if (capacity == 0) {
                 array = new Entry[10];
                 capacity = 10;
             }
-            Entry entry = new Entry(key, value);
+            Entry<K, V> entry = new Entry(key, value);
             int hash = Math.abs(entry.key.hashCode()) % capacity;
             if (array[hash] == null) {
                 array[hash] = entry;
             } else {
-                Entry current = array[hash];
+                Entry<K, V> current = array[hash];
                 while (current.next != null) {
                     current = current.next;
                 }
@@ -96,19 +98,21 @@ public class HashMapIml implements Map {
             }
             size++;
         }
-        return false;
+        return value;
     }
 
     @Override
-    public Object remove(Object key) {
+    public V remove(Object key) {
         if (key != null) {
             int hash = Math.abs(key.hashCode()) % capacity;
-            if (hash >= 0 || hash < capacity) {
-                Entry current = array[hash];
+            if (array[hash] != null) {
+                Entry<K, V> current = array[hash];
+                V value = current.value;
                 if (current.next == null) {
                     if (current.key.equals(key)) {
                         current = null;
                         size--;
+                        return value;
                     }
                 } else {
                     while (current.next != null) {
@@ -119,20 +123,21 @@ public class HashMapIml implements Map {
                         }
                         current = current.next;
                     }
+                    return value;
                 }
             }
         }
-        return true;
+        return null;
     }
 
     @Override
-    public void putAll(Map m) {
+    public void putAll(Map<? extends K, ? extends V> m) {
         if (capacity != 0) {
             Set mapInputSet = m.entrySet();
             for (Object o : mapInputSet) {
                 Object key = ((Map.Entry) o).getKey();
                 Object value = ((Map.Entry) o).getValue();
-                put(key, value);
+                put((K) key, (V) value);
                 size++;
             }
         }
@@ -145,10 +150,10 @@ public class HashMapIml implements Map {
     }
 
     @Override
-    public Set keySet() {
-        Set keySet = new HashSet();
+    public Set<K> keySet() {
+        Set<K> keySet = new HashSet();
         for (int i = 0; i < capacity; i++) {
-            Entry current = array[i];
+            Entry<K, V> current = array[i];
             while (current != null) {
                 keySet.add(current.key);
                 current = current.next;
@@ -158,11 +163,11 @@ public class HashMapIml implements Map {
     }
 
     @Override
-    public Collection values() {
-        Collection values = new ArrayList();
+    public Collection<V> values() {
+        Collection<V> values = new ArrayList();
         for (int i = 0; i < capacity; i++) {
             if (array[i] != null) {
-                Entry current = array[i];
+                Entry<K, V> current = array[i];
                 while (current != null) {
                     values.add(current.value);
                     current = current.next;
@@ -173,13 +178,13 @@ public class HashMapIml implements Map {
     }
 
     @Override
-    public Set<Entry> entrySet() {
-        Set<Entry> entrySet = new HashSet<>();
+    public Set<Map.Entry<K, V>> entrySet() {
+        Set<Map.Entry<K, V>> entrySet = new HashSet<>();
         for (int i = 0; i < capacity; i++) {
             if (array[i] != null) {
-                Entry current = array[i];
+                Entry<K, V> current = array[i];
                 while (current != null) {
-                    entrySet.add(current);
+                    entrySet.add((Map.Entry<K, V>) current);
                     current = current.next;
                 }
             }
@@ -230,12 +235,12 @@ public class HashMapIml implements Map {
         }
     }
 
-    class Entry {
-        private Object key;
-        private Object value;
+    class Entry<K, V> {
+        private K key;
+        private V value;
         Entry next;
 
-        public Entry(Object key, Object value) {
+        public Entry(K key, V value) {
             this.key = key;
             this.value = value;
         }
