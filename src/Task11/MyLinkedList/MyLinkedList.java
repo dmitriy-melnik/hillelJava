@@ -24,7 +24,9 @@ public class MyLinkedList<E> implements List<E> {
     public boolean contains(Object o) {
         if (indexOf(o) != -1) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -51,11 +53,10 @@ public class MyLinkedList<E> implements List<E> {
         }
     }
 
+    // added NullPointerException
     @Override
     public boolean remove(Object o) {
-        if (head == null) {
-            return false;
-        } else {
+        try {
             Node current = head;
             while (true) {
                 if (current.getData().equals(o)) {
@@ -78,6 +79,8 @@ public class MyLinkedList<E> implements List<E> {
                 if (current.getNext() == null) break;
                 current = current.getNext();
             }
+        } catch (NullPointerException removeException) {
+            removeException.printStackTrace();
         }
         return false;
     }
@@ -90,17 +93,20 @@ public class MyLinkedList<E> implements List<E> {
         return true;
     }
 
+    // added IndexOutOfBoundsException
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        if (index >= 0 && index < size) {
+        try {
             int i = index;
             for (E e : c) {
                 add(i, e);
                 i++;
             }
             return true;
+        } catch (IndexOutOfBoundsException addAllException) {
+            addAllException.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -110,6 +116,7 @@ public class MyLinkedList<E> implements List<E> {
         tail = null;
     }
 
+    // added IndexOutOfBoundsException
     @Override
     public E get(int index) {
         if (index >= 0 && index < size) {
@@ -123,70 +130,88 @@ public class MyLinkedList<E> implements List<E> {
                 if (current.getNext() == null) break;
                 current = current.getNext();
             }
+        } else {
+            throw new IndexOutOfBoundsException();
         }
         return null;
     }
 
+    // added IndexOutOfBoundsException
     @Override
     public E set(int index, E e) {
         if (e != null) {
+            if (index >= 0 && index < size) {
+                Node current = head;
+                int tempSize = 0;
+                while (true) {
+                    if (tempSize == index) {
+                        current.setData(e);
+                        break;
+                    }
+                    if (current.getNext() == null) break;
+                    tempSize++;
+                    current = current.getNext();
+                    return e;
+                }
+            } else {
+                throw new IndexOutOfBoundsException();
+            }
+        }
+        return null;
+    }
+
+    // added IndexOutOfBoundsException
+    @Override
+    public void add(int index, E e) {
+        if (e != null) {
+            if (index >= 0 && index < size) {
+                int i = 0;
+                Node current = head;
+                while (true) {
+                    if (i == index) {
+                        if (head == current) {
+                            Node node = new Node(e, null, current);
+                            current.setPrevious(node);
+                            head = node;
+                        } else {
+                            Node node = new Node(e, current.getPrevious(), current);
+                            current.getPrevious().setNext(node);
+                            current.setPrevious(node);
+                        }
+                        size++;
+                    }
+                    i++;
+                    if (current.getNext() == null) break;
+                    current = current.getNext();
+                }
+            } else {
+                throw new IndexOutOfBoundsException();
+            }
+        }
+    }
+
+    // added IndexOutOfBoundsException
+    @Override
+    public E remove(int index) {
+        if (index >= 0 && index < size) {
             Node current = head;
             int tempSize = 0;
             while (true) {
                 if (tempSize == index) {
-                    current.setData(e);
-                    break;
+                    if (current != null) {
+                        remove(current.getData());
+                        size--;
+                        return (E) current.getData();
+                    }
                 }
                 if (current.getNext() == null) break;
                 tempSize++;
                 current = current.getNext();
             }
+            return (E) current.getData();
+        } else {
+            throw new IndexOutOfBoundsException();
         }
-        return null;
-    }
-
-    @Override
-    public void add(int index, E e) {
-        if (index >= 0 && index < size && e != null) {
-            int i = 0;
-            Node current = head;
-            while (true) {
-                if (i == index) {
-                    if (head == current) {
-                        Node node = new Node(e, null, current);
-                        current.setPrevious(node);
-                        head = node;
-                    } else {
-                        Node node = new Node(e, current.getPrevious(), current);
-                        current.getPrevious().setNext(node);
-                        current.setPrevious(node);
-                    }
-                    size++;
-                }
-                i++;
-                if (current.getNext() == null) break;
-                current = current.getNext();
-            }
-        }
-    }
-
-    @Override
-    public E remove(int index) {
-        Node current = head;
-        int tempSize = 0;
-        while (true) {
-            if (tempSize == index) {
-                if (current != null) {
-                    remove(current.getData());
-                    size--;
-                    return (E) current.getData();
-                }
-            }
-            if (current.getNext() == null) break;
-            tempSize++;
-            current = current.getNext();
-        }
-        return null;
     }
 
     @Override
@@ -220,6 +245,7 @@ public class MyLinkedList<E> implements List<E> {
         return lastIndex;
     }
 
+    // added IndexOutOfBoundsException
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         if (fromIndex <= toIndex && fromIndex > 0 && toIndex <= size) {
@@ -235,8 +261,9 @@ public class MyLinkedList<E> implements List<E> {
                 current = current.getNext();
             }
             return sublist;
+        } else {
+            throw new IndexOutOfBoundsException();
         }
-        return null;
     }
 
     //--

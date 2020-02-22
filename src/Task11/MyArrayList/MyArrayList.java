@@ -1,5 +1,7 @@
 package Task11.MyArrayList;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 import java.util.*;
 
 public class MyArrayList<E> implements List<E> {
@@ -15,16 +17,14 @@ public class MyArrayList<E> implements List<E> {
     public boolean isEmpty() {
         if (size() == 0) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
     @Override
     public boolean contains(Object o) {
         if (indexOf(o) != -1) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
     @Override
@@ -36,8 +36,7 @@ public class MyArrayList<E> implements List<E> {
     public boolean add(E e) {
         if (e == null) {
             return false;
-        }
-        else {
+        } else {
             array = Arrays.copyOf(array, array.length + 1);
             array[array.length - 1] = e;
             return true;
@@ -56,8 +55,7 @@ public class MyArrayList<E> implements List<E> {
         if (i != -1) {
             remove(i);
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
     @Override
@@ -70,15 +68,16 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        if (index >= 0 && index < array.length) {
+        try {
             int i = index;
             for (E e : c) {
                 add(i, e);
                 i++;
             }
             return true;
+        } catch (IndexOutOfBoundsException e) {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -86,42 +85,53 @@ public class MyArrayList<E> implements List<E> {
         array = new Object[0];
     }
 
+    // added IndexOutOfBoundsException
     @Override
     public E get(int index) {
-        if (index >= 0 && index < array.length) {
+        try {
             return (E) array[index];
-        }
-        return null;
-    }
-
-    @Override
-    public E set(int index, E e) {
-        E value;
-        if (index >= 0 && index < array.length && e != null) {
-            value = (E) array[index];
-            array[index] = e;
-            return value;
-        }
-        return null;
-    }
-
-    @Override
-    public void add(int index, E e) {
-        if (index >= 0 && index < array.length && e != null) {
-            add(e);
-            for (int i = array.length - 1; i > index; i--) {
-                array[i] = array[i - 1];
-            }
-            array[index] = e;
-        }
-    }
-
-    @Override
-    public E remove(int index) {
-        if (index < 0 || index >= size()) {
+        } catch (IndexOutOfBoundsException getException) {
+            getException.printStackTrace();
             return null;
         }
-        else {
+    }
+
+    // added IndexOutOfBoundsException
+    @Override
+    public E set(int index, E e) {
+        if (e != null) {
+            E value;
+            try {
+                value = (E) array[index];
+                array[index] = e;
+                return value;
+            } catch (IndexOutOfBoundsException setException) {
+                setException.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    // added IndexOutOfBoundsException
+    @Override
+    public void add(int index, E e) {
+        if (e != null) {
+            try {
+                add(e);
+                for (int i = array.length - 1; i > index; i--) {
+                    array[i] = array[i - 1];
+                }
+                array[index] = e;
+            } catch (IndexOutOfBoundsException addIndexException) {
+                addIndexException.printStackTrace();
+            }
+        }
+    }
+
+    // added IndexOutOfBoundsException
+    @Override
+    public E remove(int index) {
+        try {
             E value = (E) array[index];
             Object[] firstPart = new Object[index];
             for (int j = 0; j < firstPart.length; j++) {
@@ -138,6 +148,9 @@ public class MyArrayList<E> implements List<E> {
                 add((E) object);
             }
             return value;
+        } catch (IndexOutOfBoundsException removeException) {
+            removeException.printStackTrace();
+            return null;
         }
     }
 
@@ -174,13 +187,16 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        if (fromIndex <= toIndex && fromIndex > 0 && toIndex < array.length) {
-            MyArrayList<E> sublist = new MyArrayList<E>();
-
-            for (int i = fromIndex; i < toIndex; i++) {
-                sublist.add((E) array[i]);
+        if (fromIndex <= toIndex) {
+            try {
+                MyArrayList<E> sublist = new MyArrayList<E>();
+                for (int i = fromIndex; i < toIndex; i++) {
+                    sublist.add((E) array[i]);
+                }
+                return sublist;
+            } catch (IndexOutOfBoundsException subListException) {
+                subListException.printStackTrace();
             }
-            return sublist;
         }
         return null;
     }

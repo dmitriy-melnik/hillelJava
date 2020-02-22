@@ -25,11 +25,9 @@ public class SetImpl<E> implements Set<E> {
         return head == null;
     }
 
+    // added ClassCastException | NullPointerException
     @Override
     public boolean contains(Object o) {
-        if (o == null) {
-            return false;
-        }
         try {
             if (comparator != null) {
                 Node current = head;
@@ -70,7 +68,8 @@ public class SetImpl<E> implements Set<E> {
                     }
                 }
             }
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | NullPointerException containsException) {
+            containsException.printStackTrace();
             return false;
         }
         return false;
@@ -95,11 +94,10 @@ public class SetImpl<E> implements Set<E> {
         }
     }*/
 
+    // added NullPointerException
     @Override
     public boolean add(E e) {
-        if (e == null) {
-            return false;
-        } else {
+        try {
             Node node = new Node(e, null, null);
             Node current = head;
             if (comparator != null) {
@@ -153,6 +151,9 @@ public class SetImpl<E> implements Set<E> {
             }
             size++;
             return true;
+        } catch (NullPointerException addException) {
+            addException.printStackTrace();
+            return false;
         }
     }
 
