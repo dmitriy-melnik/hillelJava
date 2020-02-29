@@ -6,11 +6,15 @@ import java.util.List;
 public class Student {
 
     private String lastName;
+    private String name;
+    private double avg;
     private List<Integer> marks = new ArrayList();
     private List<Boolean> attandance = new ArrayList<>();
 
-    public Student(String lastName) {
+    public Student(String name, String lastName, double avg) {
+        this.name = name;
         this.lastName = lastName;
+        this.avg = avg;
     }
 
     // getters
@@ -27,7 +31,24 @@ public class Student {
         return attandance;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public double getAvg() {
+        return avg;
+    }
+
     // setters
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAvg(double avg) {
+        this.avg = avg;
+    }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -47,9 +68,9 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "lastName='" + lastName + '\'' +
-                ", marks=" + marks +
-                ", attandance=" + attandance +
+                "name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", avg=" + avg +
                 '}';
     }
 }

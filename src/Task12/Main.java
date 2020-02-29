@@ -1,64 +1,48 @@
 package Task12;
 
+import Task5.Student;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.Comparator;
+import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
+        Student vasya = new Student("vasiliy", "sidorov", 90);
+        Student petya = new Student("petya", "ivanov", 68);
+        Student alex = new Student("alex", "lesli", 89);
 
-        /* протестировано на дереве:
-                      __ 10 __
-                    /         \
-                   7          15
-                /     \     /
-               5       9   11
-                              \
-                               14
-         */
-        SetImpl bin = new SetImpl();
-        /*bin.add(10);
-        bin.add(7);
-        bin.add(15);
-        bin.add(5);
-        bin.add(9);
-        bin.add(11);
-        bin.add(14);*/
-        bin.add("hello");
-        bin.add("world");
-        bin.add("mile");
-        bin.add("random");
-        bin.add("by");
+        System.out.println("Выберите критерий сортировки:");
+        System.out.println("1 - по имени");
+        System.out.println("2 - по фамилии");
+        System.out.println("Любое другое число - по среднему балу");
+        Scanner s = new Scanner(System.in);
+        Integer a = s.nextInt();
 
-        bin.printPreorder();
-        System.out.println();
-        bin.printInorder();
-        System.out.println();
+        if (a.equals(1)) {
+            Comparator<Student> comparator = (o1, o2) -> (o1.getName().compareTo(o2.getName()));
+            SetImpl<Student> bin = new SetImpl(comparator);
+            bin.add(vasya);
+            bin.add(petya);
+            bin.add(alex);
+            bin.printInorder();
+        } else if (a.equals(2)) {
+            Comparator<Student> comparator = (o1, o2) -> (o1.getLastName().compareTo(o2.getLastName()));
+            SetImpl<Student> bin = new SetImpl(comparator);
+            bin.add(vasya);
+            bin.add(petya);
+            bin.add(alex);
+            bin.printInorder();
+        } else {
+            Comparator<Student> comparator = (o1, o2) -> (Double.compare(o1.getAvg(), o2.getAvg()));
+            SetImpl<Student> bin = new SetImpl(comparator);
+            bin.add(vasya);
+            bin.add(petya);
+            bin.add(alex);
+            bin.printInorder();
+        }
 
-        /*System.out.println("Contains 5: " + bin.contains(5));
-        System.out.println("Contains 234: " + bin.contains(234));
-        System.out.println("Contains (recursion) 11: " + bin.containsRecursion(11));
-        System.out.println("Contains (recursion) 67: " + bin.containsRecursion(67));
-        System.out.println("Contains hello: " + bin.contains("hello"));
-
-        TestForCompare t1 = new TestForCompare(6);
-        TestForCompare t2 = new TestForCompare(7);
-        TestForCompare t3 = new TestForCompare(2);
-        SetImpl bin2 = new SetImpl((o1, o2) -> {
-            if (o1 instanceof TestForCompare && o2 instanceof TestForCompare) {
-                return ((TestForCompare) o1).getX() - ((TestForCompare) o2).getX();
-            }
-            return 0;
-        });
-        bin2.add(t1);
-        bin2.add(t2);
-        bin2.add(t3);
-
-        System.out.println("\n");
-        bin2.printPreorder();
-        System.out.println();
-        bin2.printInorder();
-        System.out.println();*/
     }
 }
