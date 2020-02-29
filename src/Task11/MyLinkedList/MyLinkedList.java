@@ -56,7 +56,10 @@ public class MyLinkedList<E> implements List<E> {
     // added NullPointerException
     @Override
     public boolean remove(Object o) {
-        try {
+        if (o == null) {
+            throw  new NullPointerException();
+        }
+        else {
             Node current = head;
             while (true) {
                 if (current.getData().equals(o)) {
@@ -79,8 +82,6 @@ public class MyLinkedList<E> implements List<E> {
                 if (current.getNext() == null) break;
                 current = current.getNext();
             }
-        } catch (NullPointerException removeException) {
-            removeException.printStackTrace();
         }
         return false;
     }
@@ -96,16 +97,15 @@ public class MyLinkedList<E> implements List<E> {
     // added IndexOutOfBoundsException
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        try {
+        if (index < 0 && index >= size) {
+            throw new IndexOutOfBoundsException();
+        } else {
             int i = index;
             for (E e : c) {
                 add(i, e);
                 i++;
             }
             return true;
-        } catch (IndexOutOfBoundsException addAllException) {
-            addAllException.printStackTrace();
-            return false;
         }
     }
 
@@ -119,7 +119,9 @@ public class MyLinkedList<E> implements List<E> {
     // added IndexOutOfBoundsException
     @Override
     public E get(int index) {
-        if (index >= 0 && index < size) {
+        if (index < 0 && index >= size) {
+            throw new IndexOutOfBoundsException();
+        } else {
             int i = 0;
             Node current = head;
             while (true) {
@@ -130,8 +132,6 @@ public class MyLinkedList<E> implements List<E> {
                 if (current.getNext() == null) break;
                 current = current.getNext();
             }
-        } else {
-            throw new IndexOutOfBoundsException();
         }
         return null;
     }
@@ -140,7 +140,9 @@ public class MyLinkedList<E> implements List<E> {
     @Override
     public E set(int index, E e) {
         if (e != null) {
-            if (index >= 0 && index < size) {
+            if (index < 0 && index >= size) {
+                throw new IndexOutOfBoundsException();
+            } else {
                 Node current = head;
                 int tempSize = 0;
                 while (true) {
@@ -153,8 +155,6 @@ public class MyLinkedList<E> implements List<E> {
                     current = current.getNext();
                     return e;
                 }
-            } else {
-                throw new IndexOutOfBoundsException();
             }
         }
         return null;
@@ -164,7 +164,9 @@ public class MyLinkedList<E> implements List<E> {
     @Override
     public void add(int index, E e) {
         if (e != null) {
-            if (index >= 0 && index < size) {
+            if (index < 0 && index >= size) {
+                throw new IndexOutOfBoundsException();
+            } else {
                 int i = 0;
                 Node current = head;
                 while (true) {
@@ -184,8 +186,6 @@ public class MyLinkedList<E> implements List<E> {
                     if (current.getNext() == null) break;
                     current = current.getNext();
                 }
-            } else {
-                throw new IndexOutOfBoundsException();
             }
         }
     }
@@ -193,7 +193,9 @@ public class MyLinkedList<E> implements List<E> {
     // added IndexOutOfBoundsException
     @Override
     public E remove(int index) {
-        if (index >= 0 && index < size) {
+        if (index < 0 && index >= size) {
+            throw new IndexOutOfBoundsException();
+        } else {
             Node current = head;
             int tempSize = 0;
             while (true) {
@@ -209,8 +211,6 @@ public class MyLinkedList<E> implements List<E> {
                 current = current.getNext();
             }
             return (E) current.getData();
-        } else {
-            throw new IndexOutOfBoundsException();
         }
     }
 

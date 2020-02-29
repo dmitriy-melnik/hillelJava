@@ -39,7 +39,7 @@ public class Main {
         /*System.out.println("Contains 5: " + bin.contains(5));
         System.out.println("Contains 234: " + bin.contains(234));
         System.out.println("Contains (recursion) 11: " + bin.containsRecursion(11));
-        System.out.println("Contains (recursion) 67: " + bin.containsRecursion(67));*/
+        System.out.println("Contains (recursion) 67: " + bin.containsRecursion(67));
         System.out.println("Contains hello: " + bin.contains("hello"));
 
         TestForCompare t1 = new TestForCompare(6);
@@ -59,8 +59,6 @@ public class Main {
         bin2.printPreorder();
         System.out.println();
         bin2.printInorder();
-        System.out.println();
-
-
+        System.out.println();*/
     }
 }

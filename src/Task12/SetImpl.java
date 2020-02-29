@@ -25,17 +25,19 @@ public class SetImpl<E> implements Set<E> {
         return head == null;
     }
 
-    // added ClassCastException | NullPointerException
+    // added NullPointerException
     @Override
     public boolean contains(Object o) {
-        try {
+        if (o == null) {
+            throw new NullPointerException();
+        } else {
             if (comparator != null) {
                 Node current = head;
                 while (true) {
                     if (comparator.compare((E) o, (E) current.getData()) == 0) {
                         return true;
                     }
-                    if (comparator.compare((E) o, (E)current.getData()) > 0) {
+                    if (comparator.compare((E) o, (E) current.getData()) > 0) {
                         if (current.getRight() == null) {
                             return false;
                         }
@@ -68,9 +70,6 @@ public class SetImpl<E> implements Set<E> {
                     }
                 }
             }
-        } catch (ClassCastException | NullPointerException containsException) {
-            containsException.printStackTrace();
-            return false;
         }
         return false;
     }
@@ -97,7 +96,9 @@ public class SetImpl<E> implements Set<E> {
     // added NullPointerException
     @Override
     public boolean add(E e) {
-        try {
+        if (e == null) {
+           throw new NullPointerException();
+        } else {
             Node node = new Node(e, null, null);
             Node current = head;
             if (comparator != null) {
@@ -151,9 +152,6 @@ public class SetImpl<E> implements Set<E> {
             }
             size++;
             return true;
-        } catch (NullPointerException addException) {
-            addException.printStackTrace();
-            return false;
         }
     }
 

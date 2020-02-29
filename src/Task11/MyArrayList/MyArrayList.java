@@ -88,11 +88,10 @@ public class MyArrayList<E> implements List<E> {
     // added IndexOutOfBoundsException
     @Override
     public E get(int index) {
-        try {
+        if (index < 0 || index >= array.length) {
+            throw new IndexOutOfBoundsException();
+        } else {
             return (E) array[index];
-        } catch (IndexOutOfBoundsException getException) {
-            getException.printStackTrace();
-            return null;
         }
     }
 
@@ -101,12 +100,12 @@ public class MyArrayList<E> implements List<E> {
     public E set(int index, E e) {
         if (e != null) {
             E value;
-            try {
+            if (index < 0 || index >= array.length) {
+                throw new IndexOutOfBoundsException();
+            } else {
                 value = (E) array[index];
                 array[index] = e;
                 return value;
-            } catch (IndexOutOfBoundsException setException) {
-                setException.printStackTrace();
             }
         }
         return null;
@@ -116,14 +115,14 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public void add(int index, E e) {
         if (e != null) {
-            try {
+            if (index < 0 || index >= array.length) {
+                throw new IndexOutOfBoundsException();
+            } else {
                 add(e);
                 for (int i = array.length - 1; i > index; i--) {
                     array[i] = array[i - 1];
                 }
                 array[index] = e;
-            } catch (IndexOutOfBoundsException addIndexException) {
-                addIndexException.printStackTrace();
             }
         }
     }
@@ -131,7 +130,10 @@ public class MyArrayList<E> implements List<E> {
     // added IndexOutOfBoundsException
     @Override
     public E remove(int index) {
-        try {
+        if (index < 0 || index >= array.length) {
+            throw new IndexOutOfBoundsException();
+        }
+        else {
             E value = (E) array[index];
             Object[] firstPart = new Object[index];
             for (int j = 0; j < firstPart.length; j++) {
@@ -148,9 +150,6 @@ public class MyArrayList<E> implements List<E> {
                 add((E) object);
             }
             return value;
-        } catch (IndexOutOfBoundsException removeException) {
-            removeException.printStackTrace();
-            return null;
         }
     }
 

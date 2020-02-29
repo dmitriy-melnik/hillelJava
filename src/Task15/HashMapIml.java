@@ -1,5 +1,7 @@
 package Task15;
 
+import sun.security.x509.OtherName;
+
 import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.util.*;
 
@@ -61,7 +63,9 @@ public class HashMapIml<K, V> implements Map<K, V> {
     // added NullPointerException
     @Override
     public V get(Object key) {
-        try {
+        if (key == null) {
+            throw new NullPointerException();
+        } else {
             int hash = Math.abs(key.hashCode()) % capacity;
             if (array[hash] != null) {
                 Entry current = array[hash];
@@ -75,8 +79,6 @@ public class HashMapIml<K, V> implements Map<K, V> {
                     current = current.next;
                 }
             }
-        } catch (NullPointerException getException) {
-            getException.printStackTrace();
         }
         return null;
     }
@@ -84,7 +86,9 @@ public class HashMapIml<K, V> implements Map<K, V> {
     // added NullPointerException
     @Override
     public V put(K key, V value) {
-        try {
+        if (key == null) {
+          throw new NullPointerException();
+        } else {
             if (capacity == 0) {
                 array = new Entry[10];
                 capacity = 10;
@@ -101,8 +105,6 @@ public class HashMapIml<K, V> implements Map<K, V> {
                 current.next = entry;
             }
             size++;
-        } catch (NullPointerException putException) {
-            throw new NullPointerException("Can't put null object as a key");
         }
         return value;
     }
@@ -110,7 +112,9 @@ public class HashMapIml<K, V> implements Map<K, V> {
     // added NullPointerException
     @Override
     public V remove(Object key) {
-        try {
+        if (key == null) {
+            throw new NullPointerException();
+        } else  {
             int hash = Math.abs(key.hashCode()) % capacity;
             if (array[hash] != null) {
                 Entry<K, V> current = array[hash];
@@ -133,8 +137,6 @@ public class HashMapIml<K, V> implements Map<K, V> {
                     return value;
                 }
             }
-        } catch (NullPointerException removeException) {
-            throw new NullPointerException("Can't remove because HashMap doesn't contain null keys");
         }
         return null;
     }
