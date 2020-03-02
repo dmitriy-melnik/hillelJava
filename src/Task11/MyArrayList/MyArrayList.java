@@ -68,15 +68,15 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        try {
+        if (index < 0 || index >= array.length) {
+            throw new IndexOutOfBoundsException();
+        } else {
             int i = index;
             for (E e : c) {
                 add(i, e);
                 i++;
             }
             return true;
-        } catch (IndexOutOfBoundsException e) {
-            return false;
         }
     }
 
