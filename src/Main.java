@@ -1,31 +1,26 @@
-import Task7.*;
-import Task7.Abstracts.Animal;
-import Task8.ArrayObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import Task5.Group;
+import Task5.Student;
 
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println(fibonachi(10)); // 55
-        //System.out.println(fibonachi(100)); // no answer
-        //System.out.println(fibonachi(1000)); // no answer
-
-        System.out.println(fib(10));
-        System.out.println(fib(100));
-        System.out.println(fib(1000));
+        Student ivan = new Student("Ivan", "Ivanov", 99);
+        Student peter = new Student("Peter", "Petrov", 70);
+        Group group1 = new Group(1);
+        group1.addStudent(ivan);
+        group1.addStudent(peter);
+        group1.saveToFile("src/Task5/output.txt");
 
     }
+}
 
-    public static int fibonachi(int number) {
+/*public static int fibonachi(int number) {
         if (number == 0) return 0;
         if (number == 1) return 1;
         return fibonachi(number - 1) + fibonachi(number - 2);
-    }
+    }*/
 
-    public static double fib(double number) {
+    /*public static double fib(double number) {
         double n0 = 0;
         double n1 = 1;
         for (int i = 2; i <= number; ++i) {
@@ -34,8 +29,8 @@ public class Main {
             n1 = next;
         }
         return n1;
-    }
-}
+    }*/
+
 
 // TASK 8, TEST --------------------------------------------------------------------------------------------------------
 

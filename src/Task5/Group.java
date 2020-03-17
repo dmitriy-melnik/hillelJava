@@ -1,5 +1,6 @@
 package Task5;
 
+import java.io.*;
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -74,4 +75,20 @@ public class Group {
         students.clear();
     }
 
+    // вывод в файл txt
+    public void saveToFile(String path) {
+        try (FileWriter fw = new FileWriter(path, true)) {
+            int readData;
+            fw.write("Group" + getNumber() + "\n");
+            Iterator<Student> sItr = students.iterator();
+            while (sItr.hasNext()) {
+                Student s = sItr.next();
+                fw.write(s.toString() + "\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
