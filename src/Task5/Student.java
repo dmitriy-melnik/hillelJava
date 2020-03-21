@@ -67,6 +67,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return name + " " + lastName + " - " + avg;
+        return name + "," + lastName + "," + avg;
     }
 }

@@ -1,3 +1,2 @@
-Group1
-Ivan Ivanov - 99.0
-Peter Petrov - 70.0
+Ivan,Ivanov,90.5
+Peter,Petrov,55.9

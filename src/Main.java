@@ -1,16 +1,19 @@
 import Task5.Group;
 import Task5.Student;
 
+import java.io.FileNotFoundException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
         Student ivan = new Student("Ivan", "Ivanov", 99);
         Student peter = new Student("Peter", "Petrov", 70);
         Group group1 = new Group(1);
-        group1.addStudent(ivan);
+        /*group1.addStudent(ivan);
         group1.addStudent(peter);
-        group1.saveToFile("src/Task5/output.txt");
-
+        group1.saveToFile("src/Task5/output.txt");*/
+        group1.getFromFile("src/Task5/output.txt");
+        group1.print();
     }
 }
 

@@ -2,6 +2,7 @@ package Task5;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.TreeSet;
 
 public class Group {
@@ -79,7 +80,6 @@ public class Group {
     public void saveToFile(String path) {
         try (FileWriter fw = new FileWriter(path, true)) {
             int readData;
-            fw.write("Group" + getNumber() + "\n");
             Iterator<Student> sItr = students.iterator();
             while (sItr.hasNext()) {
                 Student s = sItr.next();
@@ -90,5 +90,32 @@ public class Group {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // вывод из файла
+    public void getFromFile(String path) throws FileNotFoundException {
+        String name = "";
+        String lastName = "";
+        double avg = 0;
+        Scanner scanner = new Scanner(new FileReader(path));
+        scanner.useDelimiter("[,\\n]");
+        int count = 1;
+        while (scanner.hasNext()) {
+            switch (count) {
+                case 1:
+                    name = scanner.next();
+                    break;
+                case 2:
+                    lastName = scanner.next();
+                    break;
+                case 3:
+                    avg = Double.parseDouble(scanner.next());
+                    count = 0;
+                    addStudent(new Student(name, lastName, avg));
+                    break;
+            }
+            count++;
+        }
+        scanner.close();
     }
 }
