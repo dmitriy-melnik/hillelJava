@@ -1,5 +1,7 @@
 package Task5;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -11,7 +13,7 @@ public class Group {
     // данные о студентах хранятся в уже отсортированной коллекции
     // для правильной сортировки в TreeSet было передано лямбда-выражение
     // (также можно было передать анонимный класс компаратора либо Comparator.comparing(Student::getLastName), либо создать новый класс компаратора)
-    private TreeSet<Student> students = new TreeSet<>((o1, o2) -> o1.getLastName().compareTo(o2.getLastName()));
+    private TreeSet<Student> students = new TreeSet<>((o1, o2) -> Double.compare(o1.getAvg(), o2.getAvg()));
 
     public Group(int number) {
         this.number = number;
@@ -77,45 +79,49 @@ public class Group {
     }
 
     // вывод в файл txt
-    public void saveToFile(String path) {
-        try (FileWriter fw = new FileWriter(path, true)) {
-            int readData;
-            Iterator<Student> sItr = students.iterator();
-            while (sItr.hasNext()) {
-                Student s = sItr.next();
-                fw.write(s.toString() + "\n");
+    public void saveToFile(String path) throws Exception{
+        ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream(path));
+        Iterator<Student> sItr = students.iterator();
+        while (sItr.hasNext()) {
+            Student s = sItr.next();
+            objectOut.writeObject(s);
+        }
+        objectOut.close();
+    }
+
+    // вывод из файла txt
+    public void getFromFile(String path) throws Exception {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(path));
+        try {
+            while (true) {
+                addStudent((Student) in.readObject());
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            in.close();
         }
     }
 
-    // вывод из файла
-    public void getFromFile(String path) throws FileNotFoundException {
-        String name = "";
-        String lastName = "";
-        double avg = 0;
+    // вывод в файл txt в формате JSON
+    public void saveToFileJSON(String path) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        FileWriter out = new FileWriter(path);
+        Iterator<Student> sItr = students.iterator();
+        while (sItr.hasNext()) {
+            Student s = sItr.next();
+            out.write(objectMapper.writeValueAsString(s) + "\n");
+        }
+        out.close();
+    }
+
+    // вывод из файла txt JSON данных
+    public void getFromFileJSON(String path) throws Exception{
+        ObjectMapper objectMapper = new ObjectMapper();
         Scanner scanner = new Scanner(new FileReader(path));
-        scanner.useDelimiter("[,\\n]");
-        int count = 1;
+        scanner.useDelimiter("\n");
         while (scanner.hasNext()) {
-            switch (count) {
-                case 1:
-                    name = scanner.next();
-                    break;
-                case 2:
-                    lastName = scanner.next();
-                    break;
-                case 3:
-                    avg = Double.parseDouble(scanner.next());
-                    count = 0;
-                    addStudent(new Student(name, lastName, avg));
-                    break;
-            }
-            count++;
+            addStudent(objectMapper.readValue(scanner.next(), Student.class));
         }
         scanner.close();
     }
+
 }

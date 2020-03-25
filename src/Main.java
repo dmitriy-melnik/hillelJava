@@ -1,19 +1,39 @@
 import Task5.Group;
 import Task5.Student;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
-
-        Student ivan = new Student("Ivan", "Ivanov", 99);
-        Student peter = new Student("Peter", "Petrov", 70);
-        Group group1 = new Group(1);
-        /*group1.addStudent(ivan);
-        group1.addStudent(peter);
-        group1.saveToFile("src/Task5/output.txt");*/
-        group1.getFromFile("src/Task5/output.txt");
-        group1.print();
+    public static void main(String[] args) throws Exception {
+/*
+////        Student ivan = new Student("Ivan", "Ivanov", 99);
+////        Student peter = new Student("Peter", "Petrov", 55);
+//        int numberOfStudents = 10000;
+//        for (int i = 0; i < 2; i++) {
+//
+//            Group group1 = new Group(1);
+//            for (int m = 0; m < numberOfStudents; m++) {
+//                group1.addStudent(new Student("Ivan", "Ivanov", m));
+//            }
+//            System.out.println("\nNumber of studetns: " + numberOfStudents);
+//            long startTime = System.currentTimeMillis();
+//            group1.saveToFile("src/Task5/output.txt");
+//            long allTime = System.currentTimeMillis() - startTime;
+//            System.out.println("Java serialization: " + allTime / 1000.0);
+//
+//            group1.clear();
+//
+//            startTime = System.currentTimeMillis();
+//            group1.getFromFile("src/Task5/output.txt");
+//            allTime = System.currentTimeMillis() - startTime;
+//            System.out.println("Java deserialization: " + allTime / 1000.0);
+//            System.out.println("File size: " + new File("src/Task5/output.txt").length() / 1024.0 / 1024.0 + " mb");
+//            numberOfStudents = 1000000;
+//        }
+//
+////        group1.getFromFile("src/Task5/output.txt");
+////        group1.print();*/
     }
 }
 

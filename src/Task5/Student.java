@@ -1,15 +1,20 @@
 package Task5;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+public class Student implements Serializable {
 
     private String lastName;
     private String name;
     private double avg;
-    private List<Integer> marks = new ArrayList();
-    private List<Boolean> attandance = new ArrayList<>();
+    @JsonIgnore
+    private transient List<Integer> marks = new ArrayList();
+    @JsonIgnore
+    private transient List<Boolean> attandance = new ArrayList<>();
 
     public Student(String name, String lastName, double avg) {
         this.name = name;
@@ -17,6 +22,9 @@ public class Student {
         this.avg = avg;
     }
 
+    public Student() {
+
+    }
     // getters
 
     public String getLastName() {
