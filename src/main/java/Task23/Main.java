@@ -19,19 +19,26 @@ public class Main {
         // 13d70e09909669272b19647c2a55dacb -
         // 5f50dfa5385e66ce46ad8d08a9c9be68 -
 
-        ExecutorService executorService = Executors.newFixedThreadPool(4);
-        GenerateWords generateWordsFirstPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 1);
-        GenerateWords generateWordsSecondPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 2);
-        GenerateWords generateWordsThirdPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 3);
-        GenerateWords generateWordsFourthPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 4);
+//        ExecutorService executorService = Executors.newFixedThreadPool(4);
+//        GenerateWords generateWordsFirstPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 1);
+//        GenerateWords generateWordsSecondPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 2);
+//        GenerateWords generateWordsThirdPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 3);
+//        GenerateWords generateWordsFourthPart = new GenerateWords("13d70e09909669272b19647c2a55dacb", 4);
+//
+//        executorService.submit(generateWordsFirstPart);
+//        executorService.submit(generateWordsSecondPart);
+//        executorService.submit(generateWordsThirdPart);
+//        executorService.submit(generateWordsFourthPart);
+//        executorService.shutdownNow();
 
-        executorService.submit(generateWordsFirstPart);
-        executorService.submit(generateWordsSecondPart);
-        executorService.submit(generateWordsThirdPart);
-        executorService.submit(generateWordsFourthPart);
-        executorService.shutdownNow();
+        Role role = Role.USER;
+        System.out.println(role.toString());
 
 
+    }
+
+    public static enum Role {
+        USER, ADMIN;
     }
 
     public static class GenerateWords implements Runnable {
