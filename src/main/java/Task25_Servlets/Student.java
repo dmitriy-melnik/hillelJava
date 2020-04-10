@@ -15,6 +15,7 @@ public class Student {
         students.add(new Student(1, "Ivan", "Ivanov", 55));
         students.add(new Student(2, "Peter", "Petrov", 99));
         students.add(new Student(3, "Akakiy", "Vsemoguschiy", 150));
+
     }
 
     public Student(int id, String firstName, String lastName, double avg) {
